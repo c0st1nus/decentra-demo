@@ -103,7 +103,7 @@ export function MapSection() {
                     <motion.path
                       key={region.id}
                       animate={{
-                        fill: isActive ? "rgba(140, 216, 18, 0.4)" : "transparent",
+                        fill: isActive ? "rgba(140, 216, 18, 0.4)" : "rgba(140, 216, 18, 0)",
                         stroke: isActive ? "#8cd812" : "rgba(140, 216, 18, 0.3)",
                         strokeWidth: isActive ? 3 : 1.5,
                         scale: isActive ? 1.02 : 1,
@@ -112,7 +112,7 @@ export function MapSection() {
                       className="cursor-pointer hover:fill-primary/20 hover:stroke-primary"
                       d={region.path}
                       initial={{
-                        fill: "transparent",
+                        fill: "rgba(140, 216, 18, 0)",
                         stroke: "rgba(140, 216, 18, 0.3)",
                         strokeWidth: 1.5,
                       }}
@@ -143,6 +143,7 @@ export function MapSection() {
                     fill
                     alt={activeData.name}
                     className="object-cover transition-transform duration-700 hover:scale-110"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                     src={activeData.image}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
@@ -197,11 +198,10 @@ export function MapSection() {
                 key={region.id}
                 className={`
                             shrink-0 px-6 py-2 rounded-lg font-mono text-sm transition-all duration-300 snap-center border font-pixel
-                            ${
-                              activeRegion === region.id
-                                ? "bg-primary text-black border-primary scale-105 shadow-[0_0_15px_rgba(140,216,18,0.4)]"
-                                : "bg-black/40 text-default-400 border-white/10 hover:border-primary/50 hover:text-white"
-                            }
+                            ${activeRegion === region.id
+                    ? "bg-primary text-black border-primary scale-105 shadow-[0_0_15px_rgba(140,216,18,0.4)]"
+                    : "bg-black/40 text-default-400 border-white/10 hover:border-primary/50 hover:text-white"
+                  }
                         `}
                 id={`btn-${region.id}`}
                 onClick={() => handleRegionClick(region.id)}
