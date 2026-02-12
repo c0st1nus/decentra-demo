@@ -1,3 +1,3 @@
 export function ParticleGrid() {
-    return <div className="grid-bg" aria-hidden="true" />;
+  return <div aria-hidden="true" className="grid-bg" />;
 }

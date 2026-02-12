@@ -239,11 +239,11 @@ export const siteConfig = {
   tracks: [
     {
       title: "To Be Announced",
-      description: "Details coming soon"
+      description: "Details coming soon",
     },
     {
       title: "To Be Announced",
-      description: "Details coming soon"
+      description: "Details coming soon",
     },
   ],
   links: {

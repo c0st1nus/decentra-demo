@@ -21,10 +21,10 @@ export default function Home() {
       <section className="relative flex flex-col items-center justify-center text-center min-h-[90vh] py-20 px-4 gap-8 overflow-hidden">
         {/* Floating badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
           className="flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm"
+          initial={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
         >
           <MapPin className="w-3.5 h-3.5 text-primary" />
           <span className="text-xs font-mono text-primary/80 tracking-wide">
@@ -34,10 +34,10 @@ export default function Home() {
 
         {/* Main Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
           className="flex flex-col items-center gap-4"
+          initial={{ opacity: 0, y: 30 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
         >
           <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight font-pixel">
             <span className="text-gradient">Decentrathon</span>
@@ -48,20 +48,20 @@ export default function Home() {
 
         {/* Sub-heading */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
           className="max-w-2xl text-base sm:text-lg text-default-400 leading-relaxed font-pixel"
+          initial={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
         >
           Kazakhstan&apos;s national hackathon returns, baby.{" "}
-          <span className="font-medium text-primary">Built for builders.</span>{" "}
-          Back on a national scale.
+          <span className="font-medium text-primary">Built for builders.</span> Back on a national
+          scale.
         </motion.p>
 
         {/* Countdown */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.6, delay: 0.7 }}
         >
           <CountdownTimer />
@@ -69,10 +69,10 @@ export default function Home() {
 
         {/* CTA Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.9 }}
           className="flex flex-col sm:flex-row gap-4 mt-4"
+          initial={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.9 }}
         >
           <Button
             as={Link}
@@ -81,19 +81,19 @@ export default function Home() {
             href={siteConfig.links.register}
             radius="full"
             size="lg"
-            variant="shadow"
             startContent={<Zap className="w-4 h-4" />}
+            variant="shadow"
           >
             Register Now
           </Button>
           <Button
+            isExternal
             as={Link}
             className="text-base font-medium font-pixel px-8 border-default-200/50 hover:border-primary/50 transition-colors"
             href={siteConfig.links.telegram}
             radius="full"
             size="lg"
             variant="bordered"
-            isExternal
           >
             Join Our Community
           </Button>

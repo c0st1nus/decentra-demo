@@ -10,6 +10,7 @@ import {
   NavbarMenuItem,
 } from "@heroui/navbar";
 import { Button } from "@heroui/button";
+import NextLink from "next/link";
 import { Link } from "@heroui/link";
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
@@ -19,33 +20,31 @@ import { siteConfig } from "@/config/site";
 export const Navbar = () => {
   return (
     <HeroUINavbar
-      maxWidth="xl"
-      position="sticky"
       classNames={{
         base: "bg-background/60 backdrop-blur-xl backdrop-saturate-150 border-b border-white/5",
         wrapper: "px-4 sm:px-6",
       }}
+      maxWidth="xl"
+      position="sticky"
     >
       {/* Brand */}
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <a className="flex justify-start items-center gap-2" href="/">
+          <NextLink className="flex justify-start items-center gap-2" href="/">
             <div className="w-8 h-8 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center">
-              <span className="text-primary font-bold text-sm font-pixel">
-                D5
-              </span>
+              <span className="text-primary font-bold text-sm font-pixel">D5</span>
             </div>
             <p className="font-bold text-inherit tracking-wider font-pixel text-sm uppercase">
               Decentrathon
             </p>
-          </a>
+          </NextLink>
         </NavbarBrand>
 
         {/* Desktop Nav Links */}
         <ul className="hidden lg:flex gap-6 justify-start ml-6">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
-              <a
+              <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
                   "text-sm font-medium text-default-500 hover:text-primary transition-colors duration-200 font-pixel",
@@ -53,17 +52,14 @@ export const Navbar = () => {
                 href={item.href}
               >
                 {item.label}
-              </a>
+              </NextLink>
             </NavbarItem>
           ))}
         </ul>
       </NavbarContent>
 
       {/* Desktop CTA */}
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
+      <NavbarContent className="hidden sm:flex basis-1/5 sm:basis-full" justify="end">
         <NavbarItem>
           <Button
             as={Link}
