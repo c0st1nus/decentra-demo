@@ -1,2 +1,55 @@
 import { heroui } from "@heroui/theme";
-export default heroui();
+
+export default heroui({
+    defaultTheme: "dark",
+    themes: {
+        dark: {
+            colors: {
+                background: "#000000",
+                foreground: "#e4e4e7",
+                primary: {
+                    50: "#f4fce3",
+                    100: "#e8f9c0",
+                    200: "#d4f484",
+                    300: "#bfee4a",
+                    400: "#a6e520",
+                    500: "#8cd812",
+                    600: "#70ad0e",
+                    700: "#558210",
+                    800: "#446712",
+                    900: "#395714",
+                    DEFAULT: "#8cd812",
+                    foreground: "#000000",
+                },
+                secondary: {
+                    50: "#f5f0ff",
+                    100: "#ede5ff",
+                    200: "#dcceff",
+                    300: "#c4a8ff",
+                    400: "#a673ff",
+                    500: "#8b3fff",
+                    600: "#7c1df5",
+                    700: "#662bb1",
+                    800: "#571f99",
+                    900: "#491b7d",
+                    DEFAULT: "#662bb1",
+                    foreground: "#ffffff",
+                },
+                danger: {
+                    50: "#fff1f1",
+                    100: "#ffe0e0",
+                    200: "#ffc6c6",
+                    300: "#ff9e9e",
+                    400: "#ff6565",
+                    500: "#fa0000",
+                    600: "#e80000",
+                    700: "#c40000",
+                    800: "#a20404",
+                    900: "#860b0b",
+                    DEFAULT: "#fa0000",
+                    foreground: "#ffffff",
+                },
+            },
+        },
+    },
+});

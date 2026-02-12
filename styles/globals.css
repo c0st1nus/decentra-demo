@@ -7,6 +7,159 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-    --font-sans: "font", sans-serif;
-    --font-mono: "monospace", monospace;
+    --font-sans: "Outfit", sans-serif;
+    --font-mono: "Fira Code", monospace;
+    --font-pixel: "Pixelify Sans", cursive;
+}
+
+/* ── Base Dark Overrides ─────────────────────────────────────── */
+html.dark body {
+    background: #000000;
+    color: #e4e4e7;
+}
+
+/* ── Animated Grid Background ────────────────────────────────── */
+.grid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgba(140, 216, 18, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(140, 216, 18, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, black 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, black 40%, transparent 100%);
+}
+
+.grid-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle 1px, rgba(140, 216, 18, 0.12) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridPulse 4s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* ── Glow Effects ────────────────────────────────────────────── */
+.glow-primary {
+    box-shadow:
+        0 0 15px rgba(140, 216, 18, 0.4),
+        0 0 45px rgba(140, 216, 18, 0.15),
+        0 0 80px rgba(140, 216, 18, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.glow-primary:hover {
+    box-shadow:
+        0 0 20px rgba(140, 216, 18, 0.6),
+        0 0 60px rgba(140, 216, 18, 0.25),
+        0 0 100px rgba(140, 216, 18, 0.1);
+}
+
+.glow-purple {
+    box-shadow:
+        0 0 15px rgba(102, 43, 177, 0.3),
+        0 0 45px rgba(102, 43, 177, 0.1);
+}
+
+/* ── Text Gradient ───────────────────────────────────────────── */
+.text-gradient {
+    background: linear-gradient(135deg, #8cd812 0%, #662bb1 50%, #8cd812 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 4s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% center;
+    }
+
+    50% {
+        background-position: 100% center;
+    }
+
+    100% {
+        background-position: 0% center;
+    }
+}
+
+/* ── Encrypted Text Effect ───────────────────────────────────── */
+.encrypted-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.encrypted-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(140, 216, 18, 0.06) 40%,
+            rgba(102, 43, 177, 0.06) 60%,
+            transparent 100%);
+    animation: shimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* ── City Pulse Dot ──────────────────────────────────────────── */
+.city-dot {
+    animation: cityPulse 2s ease-in-out infinite;
+}
+
+@keyframes cityPulse {
+
+    0%,
+    100% {
+        r: 3;
+        opacity: 0.7;
+    }
+
+    50% {
+        r: 5;
+        opacity: 1;
+    }
+}
+
+/* ── Countdown Card ──────────────────────────────────────────── */
+.countdown-card {
+    background: rgba(15, 15, 25, 0.8);
+    border: 1px solid rgba(140, 216, 18, 0.15);
+    backdrop-filter: blur(10px);
+}
+
+/* ── Section Divider Glow ────────────────────────────────────── */
+.section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(140, 216, 18, 0.3), rgba(102, 43, 177, 0.3), transparent);
+}
+
+/* ── Smooth Scroll ───────────────────────────────────────────── */
+html {
+    scroll-behavior: smooth;
 }
