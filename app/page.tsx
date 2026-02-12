@@ -1,22 +1,29 @@
 "use client";
 
+import { useState, useCallback } from "react";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { motion } from "framer-motion";
 import { MapPin, Zap } from "lucide-react";
-
+import { ParticleGrid } from "@/components/particle-grid";
 import { siteConfig } from "@/config/site";
 import { CountdownTimer } from "@/components/countdown-timer";
-import { ParticleGrid } from "@/components/particle-grid";
+import { TerminalInput } from "@/components/terminal-input";
 import { MapSection } from "@/components/map-section";
 import { TracksSection } from "@/components/tracks-section";
 import { Footer } from "@/components/footer";
 
+
+type Phase = "title" | "version" | "done";
+
 export default function Home() {
+  const [phase, setPhase] = useState<Phase>("title");
+  const handleTitleComplete = useCallback(() => setPhase("version"), []);
+  const handleVersionComplete = useCallback(() => setPhase("done"), []);
+
   return (
     <>
       <ParticleGrid />
-
       {/* ── Hero Section ─────────────────────────────────────── */}
       <section className="relative flex flex-col items-center justify-center text-center min-h-[90vh] py-20 px-4 gap-8 overflow-hidden">
         {/* Floating badge */}
@@ -39,10 +46,27 @@ export default function Home() {
           initial={{ opacity: 0, y: 30 }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight font-pixel">
-            <span className="text-gradient">Decentrathon</span>
+          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight font-pixel leading-tight">
+            <span className="text-gradient">
+              <TerminalInput
+                text="Decentrathon"
+                speed={100}
+                delay={0.5}
+                showCursor={phase === "title"}
+                onComplete={handleTitleComplete}
+              />
+            </span>
             <br />
-            <span className="text-foreground font-sans">5.0</span>
+            <span className="text-foreground font-sans">
+              {phase !== "title" && (
+                <TerminalInput
+                  text="5.0"
+                  speed={130}
+                  showCursor={phase === "version"}
+                  onComplete={handleVersionComplete}
+                />
+              )}
+            </span>
           </h1>
         </motion.div>
 
