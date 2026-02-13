@@ -5,6 +5,7 @@ import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { motion } from "framer-motion";
 import { MapPin, Zap } from "lucide-react";
+
 import { NeuralNetworkBg } from "@/components/neural-network-bg";
 import { siteConfig } from "@/config/site";
 import { CountdownTimer } from "@/components/countdown-timer";
@@ -12,7 +13,6 @@ import { TerminalInput } from "@/components/terminal-input";
 import { MapSection } from "@/components/map-section";
 import { TracksSection } from "@/components/tracks-section";
 import { Footer } from "@/components/footer";
-
 
 type Phase = "title" | "version" | "done";
 
@@ -49,10 +49,10 @@ export default function Home() {
           <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight font-pixel leading-tight">
             <span className="text-gradient">
               <TerminalInput
-                text="Decentrathon"
-                speed={100}
                 delay={0.5}
                 showCursor={phase === "title"}
+                speed={100}
+                text="Decentrathon"
                 onComplete={handleTitleComplete}
               />
             </span>
@@ -60,9 +60,9 @@ export default function Home() {
             <span className="text-foreground font-sans">
               {phase !== "title" && (
                 <TerminalInput
-                  text="5.0"
-                  speed={130}
                   showCursor={phase === "version"}
+                  speed={130}
+                  text="5.0"
                   onComplete={handleVersionComplete}
                 />
               )}

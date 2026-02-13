@@ -1,4 +1,5 @@
 import { Link } from "@heroui/link";
+import Image from "next/image";
 
 import { siteConfig } from "@/config/site";
 
@@ -7,9 +8,7 @@ export function Footer() {
     <footer className="relative border-t border-white/5 py-12 px-4">
       <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-md bg-primary/20 border border-primary/30 flex items-center justify-center">
-            <span className="text-primary font-bold text-[10px] font-pixel">D5</span>
-          </div>
+          <Image alt="Logo" height={16} src={siteConfig.favicon} width={16} />
           <span className="text-sm text-default-400 font-pixel">
             Decentrathon <span className="font-sans">5.0</span>
           </span>

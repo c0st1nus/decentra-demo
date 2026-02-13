@@ -2,6 +2,7 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Decentrathon 5.0",
+  favicon: "/favicon.ico",
   description:
     "Kazakhstan's national hackathon returns. Built for builders. Back on a national scale.",
   navItems: [

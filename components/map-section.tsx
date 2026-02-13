@@ -198,10 +198,11 @@ export function MapSection() {
                 key={region.id}
                 className={`
                             shrink-0 px-6 py-2 rounded-lg font-mono text-sm transition-all duration-300 snap-center border font-pixel
-                            ${activeRegion === region.id
-                    ? "bg-primary text-black border-primary scale-105 shadow-[0_0_15px_rgba(140,216,18,0.4)]"
-                    : "bg-black/40 text-default-400 border-white/10 hover:border-primary/50 hover:text-white"
-                  }
+                            ${
+                              activeRegion === region.id
+                                ? "bg-primary text-black border-primary scale-105 shadow-[0_0_15px_rgba(140,216,18,0.4)]"
+                                : "bg-black/40 text-default-400 border-white/10 hover:border-primary/50 hover:text-white"
+                            }
                         `}
                 id={`btn-${region.id}`}
                 onClick={() => handleRegionClick(region.id)}

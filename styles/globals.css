@@ -42,7 +42,6 @@ html.dark body {
 }
 
 @keyframes gridPulse {
-
   0%,
   100% {
     opacity: 0.3;
@@ -109,11 +108,13 @@ html.dark body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg,
-      transparent 0%,
-      rgba(140, 216, 18, 0.06) 40%,
-      rgba(102, 43, 177, 0.06) 60%,
-      transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(140, 216, 18, 0.06) 40%,
+    rgba(102, 43, 177, 0.06) 60%,
+    transparent 100%
+  );
   animation: shimmer 2.5s ease-in-out infinite;
 }
 
@@ -133,7 +134,6 @@ html.dark body {
 }
 
 @keyframes cityPulse {
-
   0%,
   100% {
     r: 3;
@@ -156,11 +156,13 @@ html.dark body {
 /* ── Section Divider Glow ────────────────────────────────────── */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(140, 216, 18, 0.3),
-      rgba(102, 43, 177, 0.3),
-      transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(140, 216, 18, 0.3),
+    rgba(102, 43, 177, 0.3),
+    transparent
+  );
 }
 
 /* ── Terminal Cursor ─────────────────────────────────────────── */
@@ -176,7 +178,6 @@ html.dark body {
 }
 
 @keyframes cursorBlink {
-
   0%,
   100% {
     opacity: 1;

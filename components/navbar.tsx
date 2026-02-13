@@ -14,6 +14,7 @@ import NextLink from "next/link";
 import { Link } from "@heroui/link";
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
+import Image from "next/image";
 
 import { siteConfig } from "@/config/site";
 
@@ -31,9 +32,7 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-2" href="/">
-            <div className="w-8 h-8 rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center">
-              <span className="text-primary font-bold text-sm font-pixel">D5</span>
-            </div>
+            <Image alt="Logo" height={16} src={siteConfig.favicon} width={16} />
             <p className="font-bold text-inherit tracking-wider font-pixel text-sm uppercase">
               Decentrathon
             </p>
