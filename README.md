@@ -47,7 +47,7 @@ Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/c0st1nus/decentra-demo.git
-cd decentra-proj
+cd decentra-demo
 bun install
 ```
 
