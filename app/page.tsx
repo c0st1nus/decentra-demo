@@ -5,7 +5,7 @@ import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { motion } from "framer-motion";
 import { MapPin, Zap } from "lucide-react";
-import { ParticleGrid } from "@/components/particle-grid";
+import { NeuralNetworkBg } from "@/components/neural-network-bg";
 import { siteConfig } from "@/config/site";
 import { CountdownTimer } from "@/components/countdown-timer";
 import { TerminalInput } from "@/components/terminal-input";
@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-      <ParticleGrid />
+      <NeuralNetworkBg />
       {/* ── Hero Section ─────────────────────────────────────── */}
       <section className="relative flex flex-col items-center justify-center text-center min-h-[90vh] py-20 px-4 gap-8 overflow-hidden">
         {/* Floating badge */}

@@ -44,7 +44,7 @@ export function MapSection() {
 
   return (
     <section className="relative py-20 sm:py-32 px-4 overflow-hidden" id="locations">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <motion.div
           className="text-center mb-12 sm:mb-16"
