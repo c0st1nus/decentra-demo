@@ -46,7 +46,7 @@ This project uses **[Bun](https://bun.sh/)** as the package manager and runtime.
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/c0st1nus/decentra-proj.git
+git clone https://github.com/c0st1nus/decentra-demo.git
 cd decentra-proj
 bun install
 ```
