@@ -1,53 +1,110 @@
-# Next.js & HeroUI Template
+# Decentrathon 5.0 - Demo Hero Page
 
-This is a template for creating applications using Next.js 14 (app directory) and HeroUI (v2).
+> **Built for Builders.** Kazakhstan's national hackathon returns on a national scale.
+>
+> _Demo hero page crafted by **c0st1nus** (depa team)._
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
+## 🚀 Overview
 
-## Technologies Used
+This project is a high-performance, visually immersive hero page for **Decentrathon 5.0**. It features a modern, tech-centric design with interactive elements, smooth animations, and a responsive layout optimized for all devices.
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [HeroUI v2](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+The application is built using **Next.js 15** (App Router) / **React 18** and styled with **Tailwind CSS 4** and **HeroUI**.
 
-## How to Use
+## ✨ Key Features
 
-### Use the template with create-next-app
+- **⚡ Modern Tech Stack**: Built on the bleeding edge with Next.js 15 and Tailwind 4.
+- **🎨 Interactive UI**:
+  - **Neural Network Background**: A custom canvas-based particle animation with mouse interaction (`components/neural-network-bg.tsx`).
+  - **Terminal Typing Effect**: A retro-style typing animation for the main headline (`components/terminal-input.tsx`).
+  - **Interactive Map**: "Hack From Your City" section featuring clickable regions for 20+ cities (`components/map-section.tsx`).
+- **⏳ Countdown Timer**: Dynamic countdown to the event launch event (`components/countdown-timer.tsx`).
+- **🧩 Component Library**: Utilizes **HeroUI** for accessible and beautiful pre-built components (Navbar, Accordion, etc.).
+- **🎭 Smooth Animations**: Powered by **Framer Motion** for fluid transitions and entrance effects.
+- **📱 Fully Responsive**: Optimized mobile, tablet, and desktop views.
 
-To create a new project based on this template using `create-next-app`, run the following command:
+## 🛠️ Technical Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
+- **Components**: [HeroUI](https://heroui.org/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Linting**: ESLint, Prettier
+
+## 📦 Getting Started
+
+This project uses **[Bun](https://bun.sh/)** as the package manager and runtime.
+
+### Prerequisites
+
+- [Bun](https://bun.sh/docs/installation) (v1.0 or later)
+- Node.js (v18.17+ required for Next.js 15, though Bun handles runtime)
+
+### Installation
+
+Clone the repository and install dependencies:
 
 ```bash
-npx create-next-app -e https://github.com/heroui-inc/next-app-template
+git clone https://github.com/c0st1nus/decentra-proj.git
+cd decentra-proj
+bun install
 ```
 
-### Install dependencies
+### Development
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+Start the development server:
 
 ```bash
-npm install
+bun dev
 ```
 
-### Run the development server
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## 🚀 Deployment
+
+The project is optimized for deployment using **PM2** for process management.
+
+### Build
+
+First, build the production application:
 
 ```bash
-npm run dev
+bun run build
 ```
 
-### Setup pnpm (optional)
+### Start with PM2
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+Use PM2 to keep the application running in production:
 
 ```bash
-public-hoist-pattern[]=*@heroui/*
+pm2 start "bun start" --name decentra-hero
 ```
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+Or if you prefer using `npm` with PM2:
 
-## License
+```bash
+pm2 start npm --name "decentra-hero" -- start
+```
 
-Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).
+### Management
+
+- **View Status**: `pm2 status`
+- **Monitor Logs**: `pm2 logs decentra-hero`
+- **Restart**: `pm2 restart decentra-hero`
+- **Stop**: `pm2 stop decentra-hero`
+
+## 📂 Project Structure
+
+```sh
+├── app/                  # Next.js App Router pages
+├── components/           # React components
+│   ├── map-section.tsx       # Interactive map logic
+│   ├── neural-network-bg.tsx # Canvas background animation
+│   └── ...
+├── config/               # Site configuration and data
+│   ├── site.ts               # Metadata, nav items, regions data
+│   └── fonts.ts              # Font configurations
+├── public/               # Static assets (images, favicon)
+└── styles/               # Global styles (Tailwind)
+```

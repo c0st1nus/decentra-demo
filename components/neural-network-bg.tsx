@@ -243,7 +243,6 @@ export function NeuralNetworkBg() {
       }
       ctx.stroke();
 
-
       // ── Draw cursor connections ──
       if (mouseActive) {
         ctx.lineWidth = 0.4;
@@ -279,7 +278,7 @@ export function NeuralNetworkBg() {
       ctx.fill();
 
       // Subtle glow — single larger pass at low opacity
-      // Optimization: Only draw glow for some particles or reduce radius multiplier? 
+      // Optimization: Only draw glow for some particles or reduce radius multiplier?
       // Keeping it as is for visual fidelity, but we can reduce the multiplier if needed.
       ctx.fillStyle = `rgba(${PRIMARY},0.08)`;
       ctx.beginPath();
