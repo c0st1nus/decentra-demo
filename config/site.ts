@@ -247,6 +247,30 @@ export const siteConfig = {
       description: "Details coming soon",
     },
   ],
+  faq: [
+    {
+      question: "What is a hackathon?",
+      answer:
+        "A competition for IT enthusiasts where you must solve a specific tech challenge in a short amount of time, non-stop.",
+    },
+    {
+      question: "What if I don't have a team?",
+      answer: "You can find team members in our Decentrathon chat or participate solo.",
+    },
+    {
+      question: "When will the case be announced?",
+      answer: "All details about the case will be revealed at the Decentrathon opening ceremony.",
+    },
+    {
+      question: "Do I need to be a university student to participate?",
+      answer: "No, being a student is not required. Anyone interested can participate.",
+    },
+    {
+      question: "I didn't find an answer to my question. What should I do?",
+      answer:
+        "Join our Telegram community and drop your question in the chat. Our team and other participants will be happy to help you. It's the fastest way to get support and stay connected with all updates.",
+    },
+  ],
   links: {
     register: "#register",
     telegram: "https://t.me/+BF7-mS199-Q4YjAy",

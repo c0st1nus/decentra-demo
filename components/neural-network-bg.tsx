@@ -2,49 +2,60 @@
 
 import { useEffect, useRef, useCallback } from "react";
 
-interface Particle {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  baseVx: number;
-  baseVy: number;
-  radius: number;
-}
+// Tuned for performance — fewer particles, smaller radii
+const PARTICLE_COUNT = 65;
+const CONNECTION_DISTANCE = 130;
+const CONNECTION_DIST_SQ = CONNECTION_DISTANCE * CONNECTION_DISTANCE;
+const MOUSE_RADIUS = 200;
+const MOUSE_RADIUS_SQ = MOUSE_RADIUS * MOUSE_RADIUS;
+const MOUSE_FORCE = 0.12;
+const DAMPING = 0.96;
+const BASE_SPEED = 0.3;
+const LEASH_RADIUS = 110;
+const LEASH_RADIUS_SQ = LEASH_RADIUS * LEASH_RADIUS;
+const SPRING_K = 0.008;
+const PRIMARY = "140,216,18";
 
-const PARTICLE_COUNT = 120;
-const CONNECTION_DISTANCE = 140;
-const MOUSE_RADIUS = 250;
-const MOUSE_FORCE = 0.15;
-const DAMPING = 0.97;
-const BASE_SPEED = 0.35;
-const PRIMARY_R = 140;
-const PRIMARY_G = 216;
-const PRIMARY_B = 18;
+// Indices for the Float32Array
+const X = 0;
+const Y = 1;
+const ORIGIN_X = 2;
+const ORIGIN_Y = 3;
+const VX = 4;
+const VY = 5;
+const BASE_VX = 6;
+const BASE_VY = 7;
+const RADIUS = 8;
+const STRIDE = 9;
 
 export function NeuralNetworkBg() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<Particle[]>([]);
+  // Using Float32Array for better memory layout and less GC pressure
+  const particlesRef = useRef<Float32Array | null>(null);
   const mouseRef = useRef({ x: -9999, y: -9999 });
   const animFrameRef = useRef<number>(0);
   const dimensionsRef = useRef({ w: 0, h: 0 });
 
   const initParticles = useCallback((w: number, h: number) => {
-    const particles: Particle[] = [];
+    // Flattened array structure: [x, y, originX, originY, vx, vy, baseVx, baseVy, radius, ...]
+    const particles = new Float32Array(PARTICLE_COUNT * STRIDE);
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const idx = i * STRIDE;
       const angle = Math.random() * Math.PI * 2;
       const speed = (Math.random() * 0.5 + 0.5) * BASE_SPEED;
+      const px = Math.random() * w;
+      const py = Math.random() * h;
 
-      particles.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: 0,
-        vy: 0,
-        baseVx: Math.cos(angle) * speed,
-        baseVy: Math.sin(angle) * speed,
-        radius: Math.random() * 1.6 + 0.8,
-      });
+      particles[idx + X] = px;
+      particles[idx + Y] = py;
+      particles[idx + ORIGIN_X] = px;
+      particles[idx + ORIGIN_Y] = py;
+      particles[idx + VX] = 0;
+      particles[idx + VY] = 0;
+      particles[idx + BASE_VX] = Math.cos(angle) * speed;
+      particles[idx + BASE_VY] = Math.sin(angle) * speed;
+      particles[idx + RADIUS] = Math.random() * 1.4 + 0.6;
     }
     particlesRef.current = particles;
   }, []);
@@ -53,12 +64,12 @@ export function NeuralNetworkBg() {
     const canvas = canvasRef.current;
 
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
 
     if (!ctx) return;
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const w = window.innerWidth;
       const h = window.innerHeight;
 
@@ -69,7 +80,7 @@ export function NeuralNetworkBg() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       dimensionsRef.current = { w, h };
 
-      if (particlesRef.current.length === 0) {
+      if (!particlesRef.current) {
         initParticles(w, h);
       }
     };
@@ -85,109 +96,202 @@ export function NeuralNetworkBg() {
       mouseRef.current = { x: -9999, y: -9999 };
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave);
 
     const animate = () => {
       const { w, h } = dimensionsRef.current;
       const particles = particlesRef.current;
-      const mouse = mouseRef.current;
+      if (!particles) return;
+
+      const mx = mouseRef.current.x;
+      const my = mouseRef.current.y;
+      const mouseActive = mx > -9000;
 
       ctx.clearRect(0, 0, w, h);
 
-      // ── Update particles ──
-      for (const p of particles) {
-        // Apply constant base drift
-        p.vx += p.baseVx * 0.01;
-        p.vy += p.baseVy * 0.01;
+      // ── Update all particles ──
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const idx = i * STRIDE;
+        const px = particles[idx + X];
+        const py = particles[idx + Y];
+        const originX = particles[idx + ORIGIN_X];
+        const originY = particles[idx + ORIGIN_Y];
+        let vx = particles[idx + VX];
+        let vy = particles[idx + VY];
 
-        // Mouse attraction — strong pull toward cursor
-        const dxM = mouse.x - p.x;
-        const dyM = mouse.y - p.y;
-        const distM = Math.sqrt(dxM * dxM + dyM * dyM);
+        // Mouse attraction (squared distance — no sqrt)
+        if (mouseActive) {
+          const dxM = mx - px;
+          const dyM = my - py;
+          const distSqM = dxM * dxM + dyM * dyM;
 
-        if (distM < MOUSE_RADIUS && distM > 1) {
-          // Quadratic falloff for snappy attraction
-          const t = 1 - distM / MOUSE_RADIUS;
-          const force = t * t * MOUSE_FORCE;
+          if (distSqM < MOUSE_RADIUS_SQ && distSqM > 1) {
+            const distM = Math.sqrt(distSqM);
+            const t = 1 - distM / MOUSE_RADIUS;
+            const force = t * t * MOUSE_FORCE;
 
-          p.vx += (dxM / distM) * force;
-          p.vy += (dyM / distM) * force;
+            vx += (dxM / distM) * force;
+            vy += (dyM / distM) * force;
+          }
         }
 
-        p.vx *= DAMPING;
-        p.vy *= DAMPING;
-        p.x += p.vx;
-        p.y += p.vy;
+        // Spring back toward origin
+        const dxO = originX - px;
+        const dyO = originY - py;
+        const distSqO = dxO * dxO + dyO * dyO;
 
-        // Wrap around all edges seamlessly
-        if (p.x < -10) p.x += w + 20;
-        else if (p.x > w + 10) p.x -= w + 20;
-        if (p.y < -10) p.y += h + 20;
-        else if (p.y > h + 10) p.y -= h + 20;
+        if (distSqO > 1) {
+          vx += dxO * SPRING_K;
+          vy += dyO * SPRING_K;
+        }
+
+        // Hard leash (only sqrt when needed)
+        if (distSqO > LEASH_RADIUS_SQ) {
+          const distO = Math.sqrt(distSqO);
+          const ratio = LEASH_RADIUS / distO;
+
+          particles[idx + X] = originX - dxO * ratio;
+          particles[idx + Y] = originY - dyO * ratio;
+        }
+
+        vx *= DAMPING;
+        vy *= DAMPING;
+        particles[idx + X] += vx;
+        particles[idx + Y] += vy;
+        particles[idx + VX] = vx;
+        particles[idx + VY] = vy;
+
+        // Drift the origin
+        let newOriginX = originX + particles[idx + BASE_VX];
+        let newOriginY = originY + particles[idx + BASE_VY];
+
+        if (newOriginX < -10) {
+          newOriginX += w + 20;
+          particles[idx + X] += w + 20;
+        } else if (newOriginX > w + 10) {
+          newOriginX -= w + 20;
+          particles[idx + X] -= w + 20;
+        }
+
+        if (newOriginY < -10) {
+          newOriginY += h + 20;
+          particles[idx + Y] += h + 20;
+        } else if (newOriginY > h + 10) {
+          newOriginY -= h + 20;
+          particles[idx + Y] -= h + 20;
+        }
+
+        particles[idx + ORIGIN_X] = newOriginX;
+        particles[idx + ORIGIN_Y] = newOriginY;
       }
 
-      // ── Draw inter-particle connections ──
-      ctx.lineWidth = 0.7;
-      for (let i = 0; i < particles.length; i++) {
-        const pi = particles[i];
+      // ── Draw connections — batch by opacity bucket for fewer state changes ──
+      const opacityBuckets: number[] = []; // format: [x1, y1, x2, y2, opacity, ...]
 
-        for (let j = i + 1; j < particles.length; j++) {
-          const pj = particles[j];
-          const dx = pi.x - pj.x;
-          const dy = pi.y - pj.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const idxI = i * STRIDE;
+        const pix = particles[idxI + X];
+        const piy = particles[idxI + Y];
 
-          if (dist < CONNECTION_DISTANCE) {
-            const opacity = (1 - dist / CONNECTION_DISTANCE) * 0.4;
+        for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+          const idxJ = j * STRIDE;
+          const pjx = particles[idxJ + X];
+          const pjy = particles[idxJ + Y];
+          const dx = pix - pjx;
+          const dy = piy - pjy;
+          const distSq = dx * dx + dy * dy;
 
-            ctx.beginPath();
-            ctx.moveTo(pi.x, pi.y);
-            ctx.lineTo(pj.x, pj.y);
-            ctx.strokeStyle = `rgba(${PRIMARY_R},${PRIMARY_G},${PRIMARY_B},${opacity})`;
-            ctx.stroke();
+          if (distSq < CONNECTION_DIST_SQ) {
+            const dist = Math.sqrt(distSq);
+            const opacity = (1 - dist / CONNECTION_DISTANCE) * 0.35;
+
+            if (opacity > 0.02) {
+              opacityBuckets.push(pix, piy, pjx, pjy, opacity);
+            }
           }
         }
       }
 
-      // ── Draw cursor connection lines ──
-      if (mouse.x > -9000) {
-        ctx.lineWidth = 0.5;
-        for (const p of particles) {
-          const dx = mouse.x - p.x;
-          const dy = mouse.y - p.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+      // Draw all connections — group into 3 opacity levels to reduce strokeStyle changes
+      ctx.lineWidth = 0.6;
+      const groups = [0.25, 0.15, 0.06];
 
-          if (dist < MOUSE_RADIUS) {
-            const opacity = (1 - dist / MOUSE_RADIUS) * 0.55;
+      for (const threshold of groups) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(${PRIMARY},${threshold + 0.05})`;
 
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(mouse.x, mouse.y);
-            ctx.strokeStyle = `rgba(${PRIMARY_R},${PRIMARY_G},${PRIMARY_B},${opacity})`;
-            ctx.stroke();
+        for (let k = 0; k < opacityBuckets.length; k += 5) {
+          const op = opacityBuckets[k + 4];
+          if (op >= threshold && op < threshold + 0.12) {
+            ctx.moveTo(opacityBuckets[k], opacityBuckets[k + 1]);
+            ctx.lineTo(opacityBuckets[k + 2], opacityBuckets[k + 3]);
           }
         }
+        ctx.stroke();
       }
 
-      // ── Draw particles with glow ──
-      for (const p of particles) {
-        // Outer glow
-        const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 5);
-
-        g.addColorStop(0, `rgba(${PRIMARY_R},${PRIMARY_G},${PRIMARY_B},0.55)`);
-        g.addColorStop(1, `rgba(${PRIMARY_R},${PRIMARY_G},${PRIMARY_B},0)`);
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius * 5, 0, Math.PI * 2);
-        ctx.fillStyle = g;
-        ctx.fill();
-
-        // Core dot
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${PRIMARY_R},${PRIMARY_G},${PRIMARY_B},0.9)`;
-        ctx.fill();
+      // Remaining low-opacity lines
+      ctx.beginPath();
+      ctx.strokeStyle = `rgba(${PRIMARY},0.04)`;
+      for (let k = 0; k < opacityBuckets.length; k += 5) {
+        const op = opacityBuckets[k + 4];
+        if (op < 0.06) {
+          ctx.moveTo(opacityBuckets[k], opacityBuckets[k + 1]);
+          ctx.lineTo(opacityBuckets[k + 2], opacityBuckets[k + 3]);
+        }
       }
+      ctx.stroke();
+
+
+      // ── Draw cursor connections ──
+      if (mouseActive) {
+        ctx.lineWidth = 0.4;
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(${PRIMARY},0.35)`;
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          const idx = i * STRIDE;
+          const px = particles[idx + X];
+          const py = particles[idx + Y];
+          const dx = mx - px;
+          const dy = my - py;
+          const distSq = dx * dx + dy * dy;
+
+          if (distSq < MOUSE_RADIUS_SQ) {
+            ctx.moveTo(px, py);
+            ctx.lineTo(mx, my);
+          }
+        }
+        ctx.stroke();
+      }
+
+      // ── Draw particles — single fill pass, no gradients ──
+      ctx.fillStyle = `rgba(${PRIMARY},0.85)`;
+      ctx.beginPath();
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const idx = i * STRIDE;
+        const px = particles[idx + X];
+        const py = particles[idx + Y];
+        const r = particles[idx + RADIUS];
+        ctx.moveTo(px + r, py);
+        ctx.arc(px, py, r, 0, Math.PI * 2);
+      }
+      ctx.fill();
+
+      // Subtle glow — single larger pass at low opacity
+      // Optimization: Only draw glow for some particles or reduce radius multiplier? 
+      // Keeping it as is for visual fidelity, but we can reduce the multiplier if needed.
+      ctx.fillStyle = `rgba(${PRIMARY},0.08)`;
+      ctx.beginPath();
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const idx = i * STRIDE;
+        const px = particles[idx + X];
+        const py = particles[idx + Y];
+        const r = particles[idx + RADIUS];
+        ctx.moveTo(px + r * 4, py);
+        ctx.arc(px, py, r * 4, 0, Math.PI * 2);
+      }
+      ctx.fill();
 
       animFrameRef.current = requestAnimationFrame(animate);
     };

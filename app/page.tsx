@@ -6,12 +6,19 @@ import { Link } from "@heroui/link";
 import { motion } from "framer-motion";
 import { MapPin, Zap } from "lucide-react";
 
+import dynamic from "next/dynamic";
 import { NeuralNetworkBg } from "@/components/neural-network-bg";
 import { siteConfig } from "@/config/site";
 import { CountdownTimer } from "@/components/countdown-timer";
 import { TerminalInput } from "@/components/terminal-input";
-import { MapSection } from "@/components/map-section";
+// import { MapSection } from "@/components/map-section"; // Removed static import
 import { TracksSection } from "@/components/tracks-section";
+
+const MapSection = dynamic(() => import("@/components/map-section").then((mod) => mod.MapSection), {
+  ssr: false,
+  loading: () => <div className="h-[600px] w-full bg-black/20 animate-pulse" />,
+});
+import { FaqSection } from "@/components/faq-section";
 import { Footer } from "@/components/footer";
 
 type Phase = "title" | "version" | "done";
@@ -131,6 +138,8 @@ export default function Home() {
       <MapSection />
       <div className="section-divider" />
       <TracksSection />
+      <div className="section-divider" />
+      <FaqSection />
       <Footer />
     </>
   );
