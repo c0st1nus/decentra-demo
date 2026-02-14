@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useCallback } from "react";
 
-// Tuned for performance — fewer particles, smaller radii
-const PARTICLE_COUNT = 65;
+// ── Desktop defaults ──
+const PARTICLE_COUNT_DESKTOP = 65;
+const PARTICLE_COUNT_MOBILE = 25;
 const CONNECTION_DISTANCE = 130;
 const CONNECTION_DIST_SQ = CONNECTION_DISTANCE * CONNECTION_DISTANCE;
 const MOUSE_RADIUS = 200;
@@ -15,6 +16,9 @@ const LEASH_RADIUS = 110;
 const LEASH_RADIUS_SQ = LEASH_RADIUS * LEASH_RADIUS;
 const SPRING_K = 0.008;
 const PRIMARY = "140,216,18";
+
+// ~30fps on mobile (skip every other frame)
+const MOBILE_FRAME_INTERVAL = 1000 / 30;
 
 // Indices for the Float32Array
 const X = 0;
@@ -28,19 +32,26 @@ const BASE_VY = 7;
 const RADIUS = 8;
 const STRIDE = 9;
 
+function isMobileDevice() {
+  if (typeof window === "undefined") return false;
+
+  return window.innerWidth < 768 || "ontouchstart" in window;
+}
+
 export function NeuralNetworkBg() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  // Using Float32Array for better memory layout and less GC pressure
   const particlesRef = useRef<Float32Array | null>(null);
   const mouseRef = useRef({ x: -9999, y: -9999 });
   const animFrameRef = useRef<number>(0);
   const dimensionsRef = useRef({ w: 0, h: 0 });
+  const isMobileRef = useRef(false);
+  const particleCountRef = useRef(PARTICLE_COUNT_DESKTOP);
+  const lastFrameTimeRef = useRef(0);
 
-  const initParticles = useCallback((w: number, h: number) => {
-    // Flattened array structure: [x, y, originX, originY, vx, vy, baseVx, baseVy, radius, ...]
-    const particles = new Float32Array(PARTICLE_COUNT * STRIDE);
+  const initParticles = useCallback((w: number, h: number, count: number) => {
+    const particles = new Float32Array(count * STRIDE);
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
+    for (let i = 0; i < count; i++) {
       const idx = i * STRIDE;
       const angle = Math.random() * Math.PI * 2;
       const speed = (Math.random() * 0.5 + 0.5) * BASE_SPEED;
@@ -68,8 +79,15 @@ export function NeuralNetworkBg() {
 
     if (!ctx) return;
 
+    const mobile = isMobileDevice();
+
+    isMobileRef.current = mobile;
+    const particleCount = mobile ? PARTICLE_COUNT_MOBILE : PARTICLE_COUNT_DESKTOP;
+
+    particleCountRef.current = particleCount;
+
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2);
       const w = window.innerWidth;
       const h = window.innerHeight;
 
@@ -81,37 +99,59 @@ export function NeuralNetworkBg() {
       dimensionsRef.current = { w, h };
 
       if (!particlesRef.current) {
-        initParticles(w, h);
+        initParticles(w, h, particleCount);
       }
     };
 
     resize();
     window.addEventListener("resize", resize);
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
-    };
+    // Skip mouse listeners on touch devices — no persistent cursor
+    let cleanupMouse = () => {};
 
-    const handleMouseLeave = () => {
-      mouseRef.current = { x: -9999, y: -9999 };
-    };
+    if (!mobile) {
+      const handleMouseMove = (e: MouseEvent) => {
+        mouseRef.current = { x: e.clientX, y: e.clientY };
+      };
+      const handleMouseLeave = () => {
+        mouseRef.current = { x: -9999, y: -9999 };
+      };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    document.addEventListener("mouseleave", handleMouseLeave);
+      window.addEventListener("mousemove", handleMouseMove, { passive: true });
+      document.addEventListener("mouseleave", handleMouseLeave);
+      cleanupMouse = () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseleave", handleMouseLeave);
+      };
+    }
 
-    const animate = () => {
+    const animate = (timestamp: number) => {
+      // Throttle to ~30fps on mobile
+      if (mobile) {
+        const elapsed = timestamp - lastFrameTimeRef.current;
+
+        if (elapsed < MOBILE_FRAME_INTERVAL) {
+          animFrameRef.current = requestAnimationFrame(animate);
+
+          return;
+        }
+        lastFrameTimeRef.current = timestamp - (elapsed % MOBILE_FRAME_INTERVAL);
+      }
+
       const { w, h } = dimensionsRef.current;
       const particles = particlesRef.current;
+      const count = particleCountRef.current;
+
       if (!particles) return;
 
       const mx = mouseRef.current.x;
       const my = mouseRef.current.y;
-      const mouseActive = mx > -9000;
+      const mouseActive = !mobile && mx > -9000;
 
       ctx.clearRect(0, 0, w, h);
 
       // ── Update all particles ──
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
+      for (let i = 0; i < count; i++) {
         const idx = i * STRIDE;
         const px = particles[idx + X];
         const py = particles[idx + Y];
@@ -120,7 +160,7 @@ export function NeuralNetworkBg() {
         let vx = particles[idx + VX];
         let vy = particles[idx + VY];
 
-        // Mouse attraction (squared distance — no sqrt)
+        // Mouse attraction (desktop only)
         if (mouseActive) {
           const dxM = mx - px;
           const dyM = my - py;
@@ -186,15 +226,15 @@ export function NeuralNetworkBg() {
         particles[idx + ORIGIN_Y] = newOriginY;
       }
 
-      // ── Draw connections — batch by opacity bucket for fewer state changes ──
-      const opacityBuckets: number[] = []; // format: [x1, y1, x2, y2, opacity, ...]
+      // ── Draw connections ──
+      const opacityBuckets: number[] = [];
 
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
+      for (let i = 0; i < count; i++) {
         const idxI = i * STRIDE;
         const pix = particles[idxI + X];
         const piy = particles[idxI + Y];
 
-        for (let j = i + 1; j < PARTICLE_COUNT; j++) {
+        for (let j = i + 1; j < count; j++) {
           const idxJ = j * STRIDE;
           const pjx = particles[idxJ + X];
           const pjy = particles[idxJ + Y];
@@ -213,17 +253,41 @@ export function NeuralNetworkBg() {
         }
       }
 
-      // Draw all connections — group into 3 opacity levels to reduce strokeStyle changes
+      // On mobile, use fewer opacity groups for less state changes
       ctx.lineWidth = 0.6;
-      const groups = [0.25, 0.15, 0.06];
-
-      for (const threshold of groups) {
+      if (mobile) {
+        // Single batch on mobile
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(${PRIMARY},${threshold + 0.05})`;
+        ctx.strokeStyle = `rgba(${PRIMARY},0.15)`;
+        for (let k = 0; k < opacityBuckets.length; k += 5) {
+          ctx.moveTo(opacityBuckets[k], opacityBuckets[k + 1]);
+          ctx.lineTo(opacityBuckets[k + 2], opacityBuckets[k + 3]);
+        }
+        ctx.stroke();
+      } else {
+        const groups = [0.25, 0.15, 0.06];
 
+        for (const threshold of groups) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(${PRIMARY},${threshold + 0.05})`;
+          for (let k = 0; k < opacityBuckets.length; k += 5) {
+            const op = opacityBuckets[k + 4];
+
+            if (op >= threshold && op < threshold + 0.12) {
+              ctx.moveTo(opacityBuckets[k], opacityBuckets[k + 1]);
+              ctx.lineTo(opacityBuckets[k + 2], opacityBuckets[k + 3]);
+            }
+          }
+          ctx.stroke();
+        }
+
+        // Remaining low-opacity lines
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(${PRIMARY},0.04)`;
         for (let k = 0; k < opacityBuckets.length; k += 5) {
           const op = opacityBuckets[k + 4];
-          if (op >= threshold && op < threshold + 0.12) {
+
+          if (op < 0.06) {
             ctx.moveTo(opacityBuckets[k], opacityBuckets[k + 1]);
             ctx.lineTo(opacityBuckets[k + 2], opacityBuckets[k + 3]);
           }
@@ -231,24 +295,12 @@ export function NeuralNetworkBg() {
         ctx.stroke();
       }
 
-      // Remaining low-opacity lines
-      ctx.beginPath();
-      ctx.strokeStyle = `rgba(${PRIMARY},0.04)`;
-      for (let k = 0; k < opacityBuckets.length; k += 5) {
-        const op = opacityBuckets[k + 4];
-        if (op < 0.06) {
-          ctx.moveTo(opacityBuckets[k], opacityBuckets[k + 1]);
-          ctx.lineTo(opacityBuckets[k + 2], opacityBuckets[k + 3]);
-        }
-      }
-      ctx.stroke();
-
-      // ── Draw cursor connections ──
+      // ── Draw cursor connections (desktop only) ──
       if (mouseActive) {
         ctx.lineWidth = 0.4;
         ctx.beginPath();
         ctx.strokeStyle = `rgba(${PRIMARY},0.35)`;
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
+        for (let i = 0; i < count; i++) {
           const idx = i * STRIDE;
           const px = particles[idx + X];
           const py = particles[idx + Y];
@@ -264,33 +316,35 @@ export function NeuralNetworkBg() {
         ctx.stroke();
       }
 
-      // ── Draw particles — single fill pass, no gradients ──
+      // ── Draw particles — single fill pass ──
       ctx.fillStyle = `rgba(${PRIMARY},0.85)`;
       ctx.beginPath();
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
+      for (let i = 0; i < count; i++) {
         const idx = i * STRIDE;
         const px = particles[idx + X];
         const py = particles[idx + Y];
         const r = particles[idx + RADIUS];
+
         ctx.moveTo(px + r, py);
         ctx.arc(px, py, r, 0, Math.PI * 2);
       }
       ctx.fill();
 
-      // Subtle glow — single larger pass at low opacity
-      // Optimization: Only draw glow for some particles or reduce radius multiplier?
-      // Keeping it as is for visual fidelity, but we can reduce the multiplier if needed.
-      ctx.fillStyle = `rgba(${PRIMARY},0.08)`;
-      ctx.beginPath();
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        const idx = i * STRIDE;
-        const px = particles[idx + X];
-        const py = particles[idx + Y];
-        const r = particles[idx + RADIUS];
-        ctx.moveTo(px + r * 4, py);
-        ctx.arc(px, py, r * 4, 0, Math.PI * 2);
+      // Glow pass — skip on mobile (expensive, barely visible on small screens)
+      if (!mobile) {
+        ctx.fillStyle = `rgba(${PRIMARY},0.08)`;
+        ctx.beginPath();
+        for (let i = 0; i < count; i++) {
+          const idx = i * STRIDE;
+          const px = particles[idx + X];
+          const py = particles[idx + Y];
+          const r = particles[idx + RADIUS];
+
+          ctx.moveTo(px + r * 4, py);
+          ctx.arc(px, py, r * 4, 0, Math.PI * 2);
+        }
+        ctx.fill();
       }
-      ctx.fill();
 
       animFrameRef.current = requestAnimationFrame(animate);
     };
@@ -300,8 +354,7 @@ export function NeuralNetworkBg() {
     return () => {
       cancelAnimationFrame(animFrameRef.current);
       window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseleave", handleMouseLeave);
+      cleanupMouse();
     };
   }, [initParticles]);
 
@@ -309,7 +362,7 @@ export function NeuralNetworkBg() {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-screen h-screen pointer-events-none"
-      style={{ zIndex: 0 }}
+      style={{ zIndex: 0, willChange: "transform" }}
     />
   );
 }

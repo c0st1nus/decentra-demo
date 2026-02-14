@@ -8,10 +8,10 @@ import { Lock } from "lucide-react";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*!?<>";
 
-function useEncryptedText(finalText: string, duration: number = 2000, start: boolean = false) {
+function useEncryptedText(finalText: string, _duration: number = 2000, start: boolean = false) {
   const [text, setText] = useState("");
   const [isResolved, setIsResolved] = useState(false);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const rafRef = useRef<number>(0);
   const hasStarted = useRef(false);
 
   useEffect(() => {
@@ -19,34 +19,46 @@ function useEncryptedText(finalText: string, duration: number = 2000, start: boo
     hasStarted.current = true;
 
     let iteration = 0;
-    // const totalIterations = Math.floor(duration / 50);
+    let lastTime = 0;
+    const chars = new Array(finalText.length);
 
-    intervalRef.current = setInterval(() => {
-      setText(
-        finalText
-          .split("")
-          .map((char, index) => {
-            if (char === " ") return " ";
-            if (index < iteration) return finalText[index];
+    const step = (timestamp: number) => {
+      if (timestamp - lastTime < 50) {
+        rafRef.current = requestAnimationFrame(step);
 
-            return CHARS[Math.floor(Math.random() * CHARS.length)];
-          })
-          .join(""),
-      );
+        return;
+      }
+      lastTime = timestamp;
+
+      for (let i = 0; i < finalText.length; i++) {
+        if (finalText[i] === " ") chars[i] = " ";
+        else if (i < iteration) chars[i] = finalText[i];
+        else chars[i] = CHARS[Math.floor(Math.random() * CHARS.length)];
+      }
+      setText(chars.join(""));
 
       iteration += 1 / 3;
 
       if (iteration >= finalText.length) {
-        if (intervalRef.current) clearInterval(intervalRef.current);
         setText(finalText);
         setIsResolved(true);
-      }
-    }, 50);
 
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
+        return;
+      }
+      rafRef.current = requestAnimationFrame(step);
     };
-  }, [finalText, duration, start]);
+
+    rafRef.current = requestAnimationFrame(step);
+
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [finalText, _duration, start]);
+
+  // Sync resolved text when finalText changes (e.g. language switch)
+  useEffect(() => {
+    if (isResolved) {
+      setText(finalText);
+    }
+  }, [finalText, isResolved]);
 
   return { text, isResolved };
 }
@@ -55,9 +67,17 @@ interface TrackCardProps {
   title: string;
   index: number;
   description: string;
+  trackLabel: string;
+  decryptingLabel: string;
 }
 
-export function TrackCard({ title, index, description }: TrackCardProps) {
+export function TrackCard({
+  title,
+  index,
+  description,
+  trackLabel,
+  decryptingLabel,
+}: TrackCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(cardRef, { once: true, margin: "-50px" });
   const { text, isResolved } = useEncryptedText(title, 3000 + index * 500, isInView);
@@ -80,7 +100,7 @@ export function TrackCard({ title, index, description }: TrackCardProps) {
             size="sm"
             variant="flat"
           >
-            Track {String(index + 1).padStart(2, "0")}
+            {trackLabel} {String(index + 1).padStart(2, "0")}
           </Chip>
           <Lock className="w-4 h-4 text-default-300 group-hover:text-primary/50 transition-colors" />
         </CardHeader>
@@ -93,7 +113,7 @@ export function TrackCard({ title, index, description }: TrackCardProps) {
             {text}
           </p>
           <p className="text-xs text-default-400 mt-3 font-pixel">
-            {isResolved ? description : "Decrypting..."}
+            {isResolved ? description : decryptingLabel}
           </p>
         </CardBody>
       </Card>

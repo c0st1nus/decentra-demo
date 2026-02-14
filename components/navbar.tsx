@@ -16,9 +16,14 @@ import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
 import Image from "next/image";
 
+import logoWithCaption from "@/public/sprites/logo_with_caption.png";
 import { siteConfig } from "@/config/site";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { useLanguage } from "@/context/language-provider";
 
 export const Navbar = () => {
+  const { languageIndex } = useLanguage();
+
   return (
     <HeroUINavbar
       classNames={{
@@ -32,10 +37,14 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-2" href="/">
-            <Image alt="Logo" height={16} src={siteConfig.favicon} width={16} />
-            <p className="font-bold text-inherit tracking-wider font-pixel text-sm uppercase">
-              Decentrathon
-            </p>
+            <Image
+              alt="Logo"
+              height={0}
+              sizes="100vw"
+              src={logoWithCaption}
+              style={{ width: "auto", height: "2.5vh" }}
+              width={0}
+            />
           </NextLink>
         </NavbarBrand>
 
@@ -50,7 +59,8 @@ export const Navbar = () => {
                 )}
                 href={item.href}
               >
-                {item.label}
+                {/* @ts-ignore - label is array */}
+                {item.label[languageIndex]}
               </NextLink>
             </NavbarItem>
           ))}
@@ -59,6 +69,9 @@ export const Navbar = () => {
 
       {/* Desktop CTA */}
       <NavbarContent className="hidden sm:flex basis-1/5 sm:basis-full" justify="end">
+        <NavbarItem className="hidden lg:flex">
+          <LanguageSwitcher />
+        </NavbarItem>
         <NavbarItem>
           <Button
             as={Link}
@@ -69,27 +82,30 @@ export const Navbar = () => {
             size="sm"
             variant="shadow"
           >
-            Register
+            {/* @ts-ignore - register label is at index 4 of navMenuItems which is Register */}
+            {siteConfig.navMenuItems[4].label[languageIndex]}
           </Button>
         </NavbarItem>
       </NavbarContent>
 
       {/* Mobile */}
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+        <LanguageSwitcher />
         <NavbarMenuToggle />
       </NavbarContent>
 
       <NavbarMenu className="bg-background/95 backdrop-blur-xl pt-6">
         <div className="mx-4 mt-2 flex flex-col gap-4">
           {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item.label}-${index}`}>
+            <NavbarMenuItem key={`${item.href}-${index}`}>
               <Link
                 className="text-lg"
-                color={item.label === "Register" ? "primary" : "foreground"}
+                color={index === 4 ? "primary" : "foreground"}
                 href={item.href}
                 size="lg"
               >
-                {item.label}
+                {/* @ts-ignore - label is array */}
+                {item.label[languageIndex]}
               </Link>
             </NavbarMenuItem>
           ))}

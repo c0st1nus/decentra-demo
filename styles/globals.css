@@ -9,7 +9,12 @@
 @theme {
   --font-sans: "Outfit", sans-serif;
   --font-mono: "Fira Code", monospace;
-  --font-pixel: "Pixelify Sans", cursive;
+  --font-pixel: "Press Start 2P", cursive;
+}
+
+.font-pixel {
+  font-family: var(--font-pixel);
+  letter-spacing: 0;
 }
 
 /* ── Base Dark Overrides ─────────────────────────────────────── */
@@ -191,4 +196,40 @@ html.dark body {
 /* ── Smooth Scroll ───────────────────────────────────────────── */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* ── Hero fade-in animation ──────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Mobile Performance Overrides ────────────────────────────── */
+@media (max-width: 768px) {
+  .countdown-card {
+    backdrop-filter: blur(4px);
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 10px rgba(140, 216, 18, 0.3);
+  }
+
+  .glow-primary:hover {
+    box-shadow: 0 0 15px rgba(140, 216, 18, 0.4);
+  }
+
+  .encrypted-shimmer::after {
+    animation: none;
+  }
+
+  .grid-bg::after {
+    animation: none;
+  }
 }

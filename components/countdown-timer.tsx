@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 import { siteConfig } from "@/config/site";
 
@@ -33,19 +32,10 @@ function getTimeLeft(): TimeLeft {
 function CountdownUnit({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="countdown-card rounded-xl px-4 py-3 sm:px-6 sm:py-4 min-w-[70px] sm:min-w-[90px] flex items-center justify-center">
-        <AnimatePresence mode="popLayout">
-          <motion.span
-            key={value}
-            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-            className="text-2xl sm:text-4xl font-sans font-bold text-primary tabular-nums"
-            exit={{ y: 20, opacity: 0, filter: "blur(4px)" }}
-            initial={{ y: -20, opacity: 0, filter: "blur(4px)" }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          >
-            {String(value).padStart(2, "0")}
-          </motion.span>
-        </AnimatePresence>
+      <div className="countdown-card rounded-xl px-3 py-2 sm:px-6 sm:py-4 min-w-[56px] sm:min-w-[90px] flex items-center justify-center">
+        <span className="text-2xl sm:text-4xl font-sans font-bold text-primary tabular-nums">
+          {String(value).padStart(2, "0")}
+        </span>
       </div>
       <span className="text-[10px] sm:text-xs font-pixel text-default-400 uppercase tracking-widest">
         {label}
@@ -69,10 +59,10 @@ export function CountdownTimer() {
 
   if (!mounted) {
     return (
-      <div className="flex gap-3 sm:gap-4">
+      <div className="flex gap-2 sm:gap-4">
         {["Days", "Hours", "Minutes", "Seconds"].map((label) => (
           <div key={label} className="flex flex-col items-center gap-2">
-            <div className="countdown-card rounded-xl px-4 py-3 sm:px-6 sm:py-4 min-w-[70px] sm:min-w-[90px] flex items-center justify-center">
+            <div className="countdown-card rounded-xl px-3 py-2 sm:px-6 sm:py-4 min-w-[56px] sm:min-w-[90px] flex items-center justify-center">
               <span className="text-2xl sm:text-4xl font-pixel font-bold text-primary/30 tabular-nums">
                 --
               </span>
@@ -87,17 +77,17 @@ export function CountdownTimer() {
   }
 
   return (
-    <div className="flex gap-3 sm:gap-4">
+    <div className="flex gap-2 sm:gap-4">
       <CountdownUnit label="Days" value={timeLeft.days} />
-      <span className="text-2xl sm:text-4xl font-pixel text-primary/30 self-start mt-3 sm:mt-4">
+      <span className="text-xl sm:text-4xl font-pixel text-primary/30 self-start mt-2 sm:mt-4">
         :
       </span>
       <CountdownUnit label="Hours" value={timeLeft.hours} />
-      <span className="text-2xl sm:text-4xl font-pixel text-primary/30 self-start mt-3 sm:mt-4">
+      <span className="text-xl sm:text-4xl font-pixel text-primary/30 self-start mt-2 sm:mt-4">
         :
       </span>
       <CountdownUnit label="Min" value={timeLeft.minutes} />
-      <span className="text-2xl sm:text-4xl font-pixel text-primary/30 self-start mt-3 sm:mt-4">
+      <span className="text-xl sm:text-4xl font-pixel text-primary/30 self-start mt-2 sm:mt-4">
         :
       </span>
       <CountdownUnit label="Sec" value={timeLeft.seconds} />

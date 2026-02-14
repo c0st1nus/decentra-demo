@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import clsx from "clsx";
+import { headers } from "next/headers";
 
 import { Providers } from "./providers";
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
   },
-  description: siteConfig.description,
+  description: siteConfig.description[0],
   icons: {
     icon: "/favicon.ico",
   },
@@ -29,7 +30,10 @@ export const viewport: Viewport = {
   themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#000000" }],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const headersList = await headers();
+  const languageIndex = parseInt(headersList.get("x-language-index") || "0", 10);
+
   return (
     <html suppressHydrationWarning className="dark" lang="en">
       <head />
@@ -41,7 +45,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           fontPixel.variable,
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
+        <Providers
+          initialLanguageIndex={languageIndex}
+          themeProps={{ attribute: "class", defaultTheme: "dark" }}
+        >
           <div className="relative flex flex-col min-h-screen">
             <Navbar />
             <main className="flex-grow">{children}</main>
