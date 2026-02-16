@@ -4,11 +4,11 @@ import { useState, useCallback } from "react";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { motion } from "framer-motion";
-import { MapPin, Zap } from "lucide-react";
+import { MapPin, Zap, MessageCircle } from "lucide-react";
 import dynamic from "next/dynamic";
 
 import { Footer } from "@/components/footer";
-import { NeuralNetworkBg } from "@/components/neural-network-bg";
+import { SpaceBg } from "@/components/space-bg";
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/context/language-provider";
 import { CountdownTimer } from "@/components/countdown-timer";
@@ -68,19 +68,19 @@ export default function Home() {
 
   return (
     <>
-      <NeuralNetworkBg />
+      <SpaceBg />
       {/* ── Hero Section ─────────────────────────────────────── */}
       <section className="relative flex flex-col items-center justify-center text-center min-h-[90vh] py-20 px-4 gap-6 sm:gap-8 overflow-hidden">
         {/* Floating badge */}
         <motion.div
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/5 backdrop-blur-sm"
+          className="flex items-center gap-2 mb-2"
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <MapPin className="w-3.5 h-3.5 text-primary" />
-          <span className="text-xs font-mono text-primary/80 tracking-wide">
-            20+ cities • Offline
+          <MapPin className="w-5 h-5 text-primary" />
+          <span className="text-xs font-mono text-primary uppercase tracking-tighter font-pixel">
+            {siteConfig.heroLabels.locations[useLanguage().languageIndex]}
           </span>
         </motion.div>
 
@@ -91,27 +91,14 @@ export default function Home() {
           initial={{ opacity: 0, y: 30 }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-8xl font-black tracking-tight leading-tight font-pixel">
-            <span className="text-gradient">
-              <TerminalInput
-                delay={0.5}
-                showCursor={phase === "title"}
-                speed={100}
-                text="Decentrathon"
-                onComplete={handleTitleComplete}
-              />
-            </span>
-            <br />
-            <span className="text-foreground">
-              {phase !== "title" && (
-                <TerminalInput
-                  showCursor={phase === "version"}
-                  speed={130}
-                  text="5.0"
-                  onComplete={handleVersionComplete}
-                />
-              )}
-            </span>
+          <h1 className="text-gradient text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-black tracking-tight leading-tight font-pixel flex flex-wrap justify-center items-center gap-2 sm:gap-4">
+            <TerminalInput
+              delay={0.5}
+              showCursor={phase === "title"}
+              speed={100}
+              text="Decentrathon 5.0"
+              onComplete={handleTitleComplete}
+            />
           </h1>
         </motion.div>
 
@@ -143,12 +130,12 @@ export default function Home() {
         >
           <Button
             as={Link}
-            className="text-xs sm:text-base font-semibold px-4 sm:px-8 glow-primary font-pixel"
+            className="text-sm sm:text-lg font-bold px-8 sm:px-10 h-12 sm:h-14 glow-primary font-pixel"
             color="primary"
             href={siteConfig.links.register}
             radius="full"
             size="lg"
-            startContent={<Zap className="w-4 h-4" />}
+            startContent={<Zap className="w-5 h-5" />}
             variant="shadow"
           >
             {siteConfig.heroLabels.register[useLanguage().languageIndex]}
@@ -156,10 +143,11 @@ export default function Home() {
           <Button
             isExternal
             as={Link}
-            className="text-xs sm:text-base font-medium font-pixel px-4 sm:px-8 border-default-200/50 hover:border-primary/50 transition-colors"
+            className="text-sm sm:text-lg font-bold font-pixel px-8 sm:px-10 h-12 sm:h-14 border-default-200/50 hover:border-primary/50 transition-colors"
             href={siteConfig.links.telegram}
             radius="full"
             size="lg"
+            startContent={<MessageCircle className="w-5 h-5" />}
             variant="bordered"
           >
             {siteConfig.heroLabels.telegram[useLanguage().languageIndex]}

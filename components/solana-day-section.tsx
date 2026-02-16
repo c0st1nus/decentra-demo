@@ -64,15 +64,15 @@ export function SolanaDaySection() {
         <div className="text-center px-4">
           <Button
             as={Link}
-            className="w-full sm:w-auto text-xs sm:text-base font-semibold px-4 sm:px-8 h-12 sm:h-auto font-pixel glow-primary"
+            className="text-sm sm:text-lg font-bold px-8 sm:px-10 h-12 sm:h-14 glow-primary font-pixel"
             color="primary"
             href={siteConfig.links.register}
             radius="full"
             size="lg"
-            startContent={<Zap className="w-4 h-4" />}
+            startContent={<Zap className="w-5 h-5" />}
             variant="shadow"
           >
-            {siteConfig.heroLabels.register[languageIndex]}
+            {siteConfig.heroLabels.register[useLanguage().languageIndex]}
           </Button>
         </div>
       </div>

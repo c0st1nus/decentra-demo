@@ -1,6 +1,7 @@
 "use client";
 
 import { Handshake } from "lucide-react";
+import Image from "next/image";
 
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/context/language-provider";
@@ -32,10 +33,20 @@ export function PartnersSection() {
               key={i}
               className="group relative bg-white/[0.03] border border-white/10 rounded-xl p-8 sm:p-10 flex items-center justify-center hover:border-primary/30 transition-all duration-300 hover:bg-white/[0.05] min-h-[120px]"
             >
-              {/* Mock logo — text placeholder */}
-              <span className="text-sm sm:text-base font-pixel text-default-400 group-hover:text-white transition-colors text-center">
-                {partner.name[languageIndex]}
-              </span>
+              {partner.image ? (
+                <div className="relative w-full h-20 sm:h-24">
+                  <Image
+                    fill
+                    alt={partner.name[languageIndex]}
+                    className="object-contain opacity-100"
+                    src={partner.image}
+                  />
+                </div>
+              ) : (
+                <span className="text-sm sm:text-base font-pixel text-default-400 group-hover:text-white transition-colors text-center">
+                  {partner.name[languageIndex]}
+                </span>
+              )}
             </div>
           ))}
         </div>

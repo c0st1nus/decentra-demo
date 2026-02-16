@@ -10,44 +10,35 @@ import {
   NavbarMenuItem,
 } from "@heroui/navbar";
 import { Button } from "@heroui/button";
+import { useState } from "react";
 import NextLink from "next/link";
 import { Link } from "@heroui/link";
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
 import Image from "next/image";
 
-import logoWithCaption from "@/public/sprites/logo_with_caption.png";
+import logoWithCaption from "@/public/images/logos/logo_with_caption.webp";
 import { siteConfig } from "@/config/site";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useLanguage } from "@/context/language-provider";
 
 export const Navbar = () => {
   const { languageIndex } = useLanguage();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <HeroUINavbar
       classNames={{
         base: "bg-background/60 backdrop-blur-xl backdrop-saturate-150 border-b border-white/5",
-        wrapper: "px-4 sm:px-6",
+        wrapper: "px-4 sm:px-6 max-w-7xl mx-auto",
       }}
-      maxWidth="xl"
+      isMenuOpen={isMenuOpen}
+      maxWidth="full"
+      onMenuOpenChange={setIsMenuOpen}
       position="sticky"
     >
       {/* Brand */}
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-2" href="/">
-            <Image
-              alt="Logo"
-              height={0}
-              sizes="100vw"
-              src={logoWithCaption}
-              style={{ width: "auto", height: "2.5vh" }}
-              width={0}
-            />
-          </NextLink>
-        </NavbarBrand>
-
         {/* Desktop Nav Links */}
         <ul className="hidden lg:flex gap-6 justify-start ml-6">
           {siteConfig.navItems.map((item) => (
@@ -103,6 +94,7 @@ export const Navbar = () => {
                 color={index === 4 ? "primary" : "foreground"}
                 href={item.href}
                 size="lg"
+                onPress={() => setIsMenuOpen(false)}
               >
                 {/* @ts-ignore - label is array */}
                 {item.label[languageIndex]}

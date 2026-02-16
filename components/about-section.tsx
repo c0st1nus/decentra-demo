@@ -9,6 +9,7 @@ import {
   ExternalLink,
   MessageCircle,
 } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 
@@ -54,10 +55,10 @@ export function AboutSection() {
                 className="group bg-white/[0.03] border border-white/10 rounded-xl p-4 sm:p-6 text-center hover:border-primary/30 transition-all duration-300 hover:bg-white/[0.05]"
               >
                 <Icon className="w-5 h-5 text-primary mx-auto mb-2" />
-                <div className="text-xl sm:text-3xl font-bold text-primary font-pixel mb-1">
+                <div className="text-lg sm:text-2xl font-bold text-primary font-pixel mb-1">
                   {stat.value}
                 </div>
-                <div className="text-[10px] sm:text-xs text-default-400 font-pixel">
+                <div className="text-[10px] sm:text-sm text-default-400 font-pixel">
                   {stat.label[languageIndex]}
                 </div>
               </div>
@@ -96,14 +97,35 @@ export function AboutSection() {
           </div>
         </div>
 
-        {/* Mock Photos Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-12">
-          {[1, 2, 3, 4].map((i) => (
+        {/* Photos Grid */}
+        {/* Photos Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 auto-rows-[200px]">
+          {[
+            { id: 1, className: "md:col-span-2 md:row-span-2" },
+            { id: 2, className: "md:col-span-1 md:row-span-1" },
+            { id: 3, className: "md:col-span-1 md:row-span-1" },
+            { id: 4, className: "md:col-span-1 md:row-span-2" },
+            { id: 5, className: "md:col-span-2 md:row-span-1" },
+            { id: 6, className: "md:col-span-1 md:row-span-1" },
+            { id: 7, className: "md:col-span-2 md:row-span-2" },
+            { id: 8, className: "md:col-span-1 md:row-span-1" },
+            { id: 9, className: "md:col-span-1 md:row-span-1" },
+            { id: 10, className: "md:col-span-1 md:row-span-2" },
+            { id: 11, className: "md:col-span-1 md:row-span-1" },
+            { id: 12, className: "md:col-span-1 md:row-span-1" },
+          ].map((photo) => (
             <div
-              key={i}
-              className="aspect-video bg-white/[0.03] border border-white/10 rounded-xl flex items-center justify-center"
+              key={photo.id}
+              className={`relative rounded-2xl overflow-hidden group border border-white/10 ${photo.className}`}
             >
-              <span className="text-[10px] sm:text-xs font-pixel text-default-500">Photo {i}</span>
+              <Image
+                src={`/images/about_us/photo_${photo.id}.webp`}
+                alt={`About Us Photo ${photo.id}`}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
             </div>
           ))}
         </div>
@@ -113,14 +135,14 @@ export function AboutSection() {
           <Button
             isExternal
             as={Link}
-            className="w-full sm:w-auto text-xs sm:text-base font-semibold px-4 sm:px-8 h-12 sm:h-auto font-pixel border-default-200/50 hover:border-primary/50 transition-colors"
+            className="text-sm sm:text-lg font-bold font-pixel px-8 sm:px-10 h-12 sm:h-14 border-default-200/50 hover:border-primary/50 transition-colors"
             href={siteConfig.links.telegram}
             radius="full"
             size="lg"
-            startContent={<MessageCircle className="w-4 h-4" />}
+            startContent={<MessageCircle className="w-5 h-5" />}
             variant="bordered"
           >
-            {siteConfig.heroLabels.telegram[languageIndex]}
+            {siteConfig.heroLabels.telegram[useLanguage().languageIndex]}
           </Button>
         </div>
       </div>

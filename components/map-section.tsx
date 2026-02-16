@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { Globe, MapPin, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { Globe, MapPin, ExternalLink, Zap } from "lucide-react";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 
@@ -14,32 +14,92 @@ export function MapSection() {
   const { languageIndex } = useLanguage();
   const [activeRegion, setActiveRegion] = useState("astana");
   const sliderRef = useRef<HTMLDivElement>(null);
-
   const activeData = siteConfig.regions.find((r) => r.id === activeRegion) || siteConfig.regions[0];
 
-  const handleRegionClick = (id: string) => {
-    setActiveRegion(id);
-    const btn = document.getElementById(`btn-${id}`);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const animationRef = useRef<number>(0);
 
-    if (btn && sliderRef.current) {
-      const scrollLeft =
-        btn.offsetLeft -
-        sliderRef.current.offsetLeft -
-        sliderRef.current.offsetWidth / 2 +
-        btn.offsetWidth / 2;
+  const scrollAccumulator = useRef(0);
 
-      sliderRef.current.scrollTo({ left: scrollLeft, behavior: "smooth" });
+  // Auto-scroll logic
+  useEffect(() => {
+    const scrollContainer = sliderRef.current;
+
+    if (!scrollContainer) return;
+
+    const animate = () => {
+      if (isAutoScrolling && !isDragging) {
+        // Accumulate fractional pixels
+        scrollAccumulator.current += siteConfig.mapSection.autoScrollSpeed; // Adjust speed as needed
+
+        if (scrollAccumulator.current >= 1) {
+          const pixelsToScroll = Math.floor(scrollAccumulator.current);
+
+          scrollContainer.scrollLeft += pixelsToScroll;
+          scrollAccumulator.current -= pixelsToScroll;
+        }
+      }
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animationRef.current = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationRef.current);
+  }, [isAutoScrolling, isDragging]);
+
+  // Infinite loop logic (seamless reset)
+  const handleScroll = () => {
+    const container = sliderRef.current;
+
+    if (!container) return;
+
+    // If we've scrolled past the first set (1/3 of total width roughly), reset to 0
+    // Actually, exact match is better: reset when scrollLeft >= scrollWidth / 3
+    // We used 3 sets. The middle set is identical to the first.
+    const oneSetWidth = container.scrollWidth / 3;
+
+    if (container.scrollLeft >= oneSetWidth * 2) {
+      container.scrollLeft -= oneSetWidth;
+    } else if (container.scrollLeft <= 0) {
+      // Allow scrolling backwards loop
+      container.scrollLeft += oneSetWidth;
     }
   };
 
-  const scrollSlider = (direction: "left" | "right") => {
-    if (sliderRef.current) {
-      const scrollAmount = 200;
+  const handleRegionClick = (id: string) => {
+    setActiveRegion(id);
+    // Removed auto-centering scroll to avoid fighting with auto-scroll and user drag
+  };
 
-      sliderRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
+  // Drag to scroll handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setIsAutoScrolling(false);
+    setStartX(e.pageX - (sliderRef.current?.offsetLeft || 0));
+    setScrollLeft(sliderRef.current?.scrollLeft || 0);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    setIsAutoScrolling(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setIsAutoScrolling(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - (sliderRef.current?.offsetLeft || 0);
+    const walk = (x - startX) * 2; // Scroll-fast factor
+
+    if (sliderRef.current) {
+      sliderRef.current.scrollLeft = scrollLeft - walk;
     }
   };
 
@@ -145,61 +205,57 @@ export function MapSection() {
         </div>
 
         {/* Navigation Slider */}
-        <div className="relative max-w-5xl mx-auto px-12">
-          <button
-            aria-label="Scroll left"
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-content1 rounded-full border border-white/10 text-default-500 hover:text-white hover:bg-primary hover:border-primary transition-colors"
-            onClick={() => scrollSlider("left")}
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-
+        <div className="relative w-full px-4 sm:px-12">
           <div
             ref={sliderRef}
-            className="flex gap-4 overflow-x-auto no-scrollbar py-4 px-2 snap-x"
+            className="flex gap-4 overflow-x-auto no-scrollbar py-4 px-2 cursor-grab active:cursor-grabbing select-none"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onScroll={handleScroll}
           >
-            {siteConfig.regions.map((region) => (
-              <button
-                key={region.id}
-                className={`
-                            shrink-0 px-3 sm:px-6 py-2 rounded-lg font-mono text-xs sm:text-sm transition-all duration-300 snap-center border font-pixel
-                            ${
-                              activeRegion === region.id
-                                ? "bg-primary text-black border-primary scale-105 shadow-[0_0_15px_rgba(140,216,18,0.4)]"
-                                : "bg-black/40 text-default-400 border-white/10 hover:border-primary/50 hover:text-white"
-                            }
-                        `}
-                id={`btn-${region.id}`}
-                onClick={() => handleRegionClick(region.id)}
-              >
-                {region.name}
-              </button>
-            ))}
-          </div>
+            {/* Triple the regions to create seamless loop buffer */}
+            {[...siteConfig.regions, ...siteConfig.regions, ...siteConfig.regions].map(
+              (region, index) => {
+                const isSelected = activeRegion === region.id;
 
-          <button
-            aria-label="Scroll right"
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-2 bg-content1 rounded-full border border-white/10 text-default-500 hover:text-white hover:bg-primary hover:border-primary transition-colors hidden sm:block"
-            onClick={() => scrollSlider("right")}
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
+                return (
+                  <button
+                    key={`${region.id}-${index}`}
+                    className={`
+                      shrink-0 px-3 sm:px-6 py-2 rounded-lg font-mono text-xs sm:text-sm transition-all duration-300 border font-pixel whitespace-nowrap
+                      ${
+                        isSelected
+                          ? "bg-primary text-black border-primary scale-105 shadow-[0_0_15px_rgba(140,216,18,0.4)]"
+                          : "bg-black/40 text-default-400 border-white/10 hover:border-primary/50 hover:text-white"
+                      }
+                    `}
+                    data-region-id={region.id}
+                    onClick={() => handleRegionClick(region.id)}
+                  >
+                    {region.name}
+                  </button>
+                );
+              },
+            )}
+          </div>
         </div>
 
         {/* Register Button */}
         <div className="text-center mt-12 px-4">
           <Button
             as={Link}
-            className="w-full sm:w-auto text-xs sm:text-base font-semibold px-4 sm:px-8 h-12 sm:h-auto font-pixel glow-primary"
+            className="text-sm sm:text-lg font-bold px-8 sm:px-10 h-12 sm:h-14 glow-primary font-pixel"
             color="primary"
             href={siteConfig.links.register}
             radius="full"
             size="lg"
-            startContent={<ExternalLink className="w-4 h-4" />}
+            startContent={<Zap className="w-5 h-5" />}
             variant="shadow"
           >
-            {siteConfig.heroLabels.register[languageIndex]}
+            {siteConfig.heroLabels.register[useLanguage().languageIndex]}
           </Button>
         </div>
       </div>

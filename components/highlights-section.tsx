@@ -1,14 +1,13 @@
 "use client";
 
-import { Briefcase, Pizza, Shirt, Users, Network, Zap, Star } from "lucide-react";
+import { Star, Zap } from "lucide-react";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
+import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/context/language-provider";
 import { parseStyledText } from "@/lib/parse-styled-text";
-
-const ICONS = [Briefcase, Pizza, Shirt, Users, Network];
 
 export function HighlightsSection() {
   const { languageIndex } = useLanguage();
@@ -16,64 +15,109 @@ export function HighlightsSection() {
 
   return (
     <section className="relative py-20 sm:py-32 px-4 overflow-hidden">
-      <div className="max-w-5xl mx-auto relative z-10 w-full">
+      <div className="max-w-6xl mx-auto relative z-10 w-full">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-20">
+        <div className="text-center mb-16 sm:mb-24">
           <div className="flex items-center justify-center gap-2 mb-6">
             <Star className="w-5 h-5 text-primary" />
             <span className="text-xs font-pixel text-primary uppercase tracking-widest">
               {cfg.badge[languageIndex]}
             </span>
           </div>
-          <h2 className="text-xl sm:text-3xl md:text-5xl font-bold tracking-tight mb-6 font-pixel">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-6 font-pixel">
             {parseStyledText(cfg.title[languageIndex])}
           </h2>
-          <p className="text-lg sm:text-2xl font-bold text-primary font-pixel">
-            {cfg.subtitle[languageIndex]}
-          </p>
         </div>
 
-        {/* Cards */}
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-6 mb-12 sm:mb-16">
-          {siteConfig.highlights.map((item, i) => {
-            const Icon = ICONS[i % ICONS.length];
+        {/* Timeline Container */}
+        <div className="relative mb-20">
+          {/* Vertical central line (desktop only) */}
+          <div className="hidden md:block absolute left-1/2 top-8 bottom-8 w-0.5 bg-primary/20 -translate-x-1/2" />
 
-            return (
-              <div
-                key={i}
-                className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.33%-16px)] group relative bg-white/[0.03] border border-white/10 rounded-xl p-6 hover:border-primary/40 transition-all duration-300 hover:bg-white/[0.05]"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 group-hover:bg-primary/20 transition-colors">
-                    <Icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm sm:text-base font-bold text-white font-pixel mb-2 break-words">
+          <div className="space-y-16 md:space-y-20">
+            {siteConfig.highlights.map((item, i) => {
+              const isLeft = i % 2 === 0;
+
+              return (
+                <div key={i} className="relative">
+                  {/* Mobile/Tablet - Center Layout */}
+                  <div className="md:hidden text-center">
+                    {/* Number Badge */}
+                    <div className="font-sans w-12 h-12 rounded-full border-2 border-primary bg-black text-primary font-bold text-xl flex items-center justify-center mb-4 mx-auto shadow-[0_0_20px_rgba(140,216,18,0.4)]">
+                      {i + 1}
+                    </div>
+                    {/* Title */}
+                    <h3 className="text-xl sm:text-2xl font-bold text-white font-pixel mb-3 leading-tight">
                       {item.title[languageIndex]}
                     </h3>
-                    <p className="text-xs sm:text-sm text-default-400 leading-relaxed">
+                    {/* Description */}
+                    <p className="text-sm sm:text-base text-default-400 leading-relaxed font-medium max-w-md mx-auto">
                       {item.description[languageIndex]}
                     </p>
                   </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
 
-        {/* CTA */}
-        <div className="text-center px-4">
+                  {/* Desktop - Timeline Layout */}
+                  <div className="hidden md:grid md:grid-cols-2 md:gap-16 items-start">
+                    {/* Left Side */}
+                    <div className={clsx("flex justify-end", !isLeft && "order-2 justify-start")}>
+                      <div className={clsx("max-w-sm", isLeft ? "text-right" : "text-left")}>
+                        {isLeft && (
+                          <>
+                            {/* Title */}
+                            <h3 className="text-2xl font-bold text-white font-pixel mb-3 leading-tight">
+                              {item.title[languageIndex]}
+                            </h3>
+                            {/* Description */}
+                            <p className="text-base text-default-400 leading-relaxed font-medium">
+                              {item.description[languageIndex]}
+                            </p>
+                          </>
+                        )}
+                        {!isLeft && (
+                          <>
+                            {/* Title */}
+                            <h3 className="text-2xl font-bold text-white font-pixel mb-3 leading-tight">
+                              {item.title[languageIndex]}
+                            </h3>
+                            {/* Description */}
+                            <p className="text-base text-default-400 leading-relaxed font-medium">
+                              {item.description[languageIndex]}
+                            </p>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Right Side (or Left if odd) */}
+                    <div className={clsx(!isLeft && "order-1")}>
+                      {/* Empty space to maintain grid */}
+                    </div>
+                  </div>
+
+                  {/* Center Dot with Number Badge (desktop only) */}
+                  <div className="hidden md:flex absolute left-1/2 top-0 -translate-x-1/2 flex-col items-center">
+                    {/* Number Badge */}
+                    <div className="w-12 h-12 rounded-full border-2 border-primary bg-black text-primary font-bold font-sans text-xl flex items-center justify-center shadow-[0_0_20px_rgba(140,216,18,0.5)] relative z-10">
+                      {i + 1}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="flex justify-center items-center px-4">
           <Button
             as={Link}
-            className="w-full sm:w-auto text-xs sm:text-base font-semibold px-4 sm:px-8 h-12 sm:h-auto font-pixel glow-primary"
+            className="text-sm sm:text-lg font-bold px-8 sm:px-10 h-12 sm:h-14 glow-primary font-pixel"
             color="primary"
             href={siteConfig.links.register}
             radius="full"
             size="lg"
-            startContent={<Zap className="w-4 h-4" />}
+            startContent={<Zap className="w-5 h-5" />}
             variant="shadow"
           >
-            {siteConfig.heroLabels.register[languageIndex]}
+            {siteConfig.heroLabels.register[useLanguage().languageIndex]}
           </Button>
         </div>
       </div>
