@@ -12,7 +12,7 @@ import {
 import Image from "next/image";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
-
+import partners from "@/public/images/about_us/partners.webp";
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/context/language-provider";
 
@@ -29,17 +29,26 @@ export function AboutSection() {
 
       <div className="max-w-5xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-12 sm:mb-16 relative">
+          <div className="hidden md:block absolute left-1/4 top-0 -translate-x-full -translate-y-1/2 w-24 h-24 pointer-events-none">
+              <Image 
+                src="/images/vectors/Vector 3.png" 
+                alt="About Vector" 
+                width={100} 
+                height={100} 
+                className="object-contain -rotate-12 opacity-60" 
+              />
+          </div>
           <div className="flex items-center justify-center gap-2 mb-4">
             <History className="w-5 h-5 text-primary" />
-            <span className="text-xs font-pixel text-primary uppercase tracking-widest">
+            <span className="text-x font-pixel text-primary uppercase tracking-widest">
               {cfg.badge[languageIndex]}
             </span>
           </div>
           <h2 className="text-2xl sm:text-4xl md:text-6xl font-black tracking-tight font-pixel mb-6">
             <span className="text-gradient">{cfg.title[languageIndex]}</span>
           </h2>
-          <p className="text-default-400 text-base sm:text-lg max-w-xl mx-auto font-pixel">
+          <p className="text-white text-base sm:text-lg max-w-xl mx-auto font-pixel">
             {cfg.subtitle[languageIndex]}
           </p>
         </div>
@@ -58,7 +67,7 @@ export function AboutSection() {
                 <div className="text-lg sm:text-2xl font-bold text-primary font-pixel mb-1">
                   {stat.value}
                 </div>
-                <div className="text-[10px] sm:text-sm text-default-400 font-pixel">
+                <div className="text-[10px] sm:text-sm  text-white font-pixel">
                   {stat.label[languageIndex]}
                 </div>
               </div>
@@ -68,7 +77,7 @@ export function AboutSection() {
 
         {/* Past Editions */}
         <div className="mb-12">
-          <h3 className="text-center text-sm sm:text-base font-pixel text-default-300 mb-6">
+          <h3 className="text-center text-sm sm:text-base font-pixel text-white mb-6">
             {cfg.pastEditionsLabel[languageIndex]}
           </h3>
           <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
@@ -80,14 +89,14 @@ export function AboutSection() {
                     className="group inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white/[0.03] border border-white/10 rounded-lg hover:border-primary/40 transition-all duration-300 hover:bg-white/[0.05]"
                     href={edition.link}
                   >
-                    <span className="text-xs sm:text-sm font-pixel text-default-400 group-hover:text-white transition-colors">
+                    <span className="text-xs sm:text-sm font-pixel text-white group-hover:text-white transition-colors">
                       {edition.label}
                     </span>
-                    <ExternalLink className="w-3 h-3 text-default-500 group-hover:text-primary transition-colors" />
+                    <ExternalLink className="w-3 h-3 text-text-white group-hover:text-primary transition-colors" />
                   </Link>
                 ) : (
                   <span className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white/[0.02] border border-white/5 rounded-lg opacity-50 cursor-not-allowed">
-                    <span className="text-xs sm:text-sm font-pixel text-default-500">
+                    <span className="text-xs sm:text-sm font-pixel text-white">
                       {edition.label}
                     </span>
                   </span>
@@ -96,23 +105,28 @@ export function AboutSection() {
             ))}
           </div>
         </div>
-
-        {/* Photos Grid */}
+        <Image
+          src={partners}
+          alt={"Partners"}
+          className="transition-transform duration-700 group-hover:scale-110 mx-auto mb-12"
+        />
         {/* Photos Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 auto-rows-[200px]">
           {[
             { id: 1, className: "md:col-span-2 md:row-span-2" },
-            { id: 2, className: "md:col-span-1 md:row-span-1" },
-            { id: 3, className: "md:col-span-1 md:row-span-1" },
+            { id: 2, className: "md:col-span-2 md:row-span-1" },
             { id: 4, className: "md:col-span-1 md:row-span-2" },
-            { id: 5, className: "md:col-span-2 md:row-span-1" },
+            { id: 14, className: "md:col-span-1 md:row-span-1" },
+            { id: 5, className: "md:col-span-1 md:row-span-1" },
+            { id: 15, className: "md:col-span-1 md:row-span-1" },
             { id: 6, className: "md:col-span-1 md:row-span-1" },
             { id: 7, className: "md:col-span-2 md:row-span-2" },
             { id: 8, className: "md:col-span-1 md:row-span-1" },
             { id: 9, className: "md:col-span-1 md:row-span-1" },
             { id: 10, className: "md:col-span-1 md:row-span-2" },
             { id: 11, className: "md:col-span-1 md:row-span-1" },
-            { id: 12, className: "md:col-span-1 md:row-span-1" },
+            { id: 12, className: "md:col-span-2 md:row-span-1" },
+            { id: 13, className: "md:col-span-1 md:row-span-1" },
           ].map((photo) => (
             <div
               key={photo.id}

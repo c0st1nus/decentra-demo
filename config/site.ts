@@ -376,7 +376,7 @@ export const siteConfig = {
   },
   solanaDay: {
     badge: ["Special Event", "Специальное событие", "Арнайы іс-шара"],
-    title: ["*Solana Day*", "*Solana Day*", "*Solana Day*"],
+    title: ["*Solana Build Station*", "*Solana Build Station*", "*Solana Build Station*"],
     poweredBy: ["powered by Decentrathon", "при поддержке Decentrathon", "Decentrathon қолдауымен"],
     stats: [
       {
@@ -458,8 +458,8 @@ export const siteConfig = {
       image: "/images/logos/logo_ahub.webp",
     },
     {
-      name: ["ICAI", "ICAI", "ICAI"],
-      image: "/images/logos/logo_icai.webp",
+      name: ["AIDM", "AIDM", "AIDM"],
+      image: "/images/logos/logo_aidm.webp",
     },
     {
       name: ["BAITC", "BAITC", "BAITC"],

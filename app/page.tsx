@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { MapPin, Zap, MessageCircle } from "lucide-react";
 import dynamic from "next/dynamic";
 
@@ -79,7 +80,7 @@ export default function Home() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <MapPin className="w-5 h-5 text-primary" />
-          <span className="text-xs font-mono text-primary uppercase tracking-tighter font-pixel">
+          <span className="text-x font-mono text-primary uppercase tracking-tighter font-pixel">
             {siteConfig.heroLabels.locations[useLanguage().languageIndex]}
           </span>
         </motion.div>
@@ -105,7 +106,7 @@ export default function Home() {
         {/* Sub-heading */}
         <motion.p
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-2xl text-[10px] sm:text-base text-default-400 leading-relaxed font-pixel"
+          className="max-w-2xl text-[10px] sm:text-base text-white leading-relaxed font-pixel"
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.5 }}
         >
@@ -169,9 +170,9 @@ export default function Home() {
       <div className="section-divider" />
       <PartnersSection />
       <div className="section-divider" />
-      <AboutSection />
-      <div className="section-divider" />
       <FaqSection />
+      <div className="section-divider" />
+      <AboutSection />
       <Footer />
     </>
   );

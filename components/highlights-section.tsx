@@ -3,6 +3,7 @@
 import { Star, Zap } from "lucide-react";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
+import Image from "next/image";
 import clsx from "clsx";
 
 import { siteConfig } from "@/config/site";
@@ -17,10 +18,19 @@ export function HighlightsSection() {
     <section className="relative py-20 sm:py-32 px-4 overflow-hidden">
       <div className="max-w-6xl mx-auto relative z-10 w-full">
         {/* Header */}
-        <div className="text-center mb-16 sm:mb-24">
+        <div className="text-center mb-16 sm:mb-24 relative">
+          <div className="hidden md:block absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 w-48 h-48 pointer-events-none opacity-50">
+               <Image 
+                src="/images/vectors/Vector 2.png" 
+                alt="Highlights Flow" 
+                width={200} 
+                height={200} 
+                className="object-contain rotate-40" 
+              />
+          </div>
           <div className="flex items-center justify-center gap-2 mb-6">
             <Star className="w-5 h-5 text-primary" />
-            <span className="text-xs font-pixel text-primary uppercase tracking-widest">
+            <span className="text-x font-pixel text-primary uppercase tracking-widest">
               {cfg.badge[languageIndex]}
             </span>
           </div>
@@ -47,11 +57,11 @@ export function HighlightsSection() {
                       {i + 1}
                     </div>
                     {/* Title */}
-                    <h3 className="text-xl sm:text-2xl font-bold text-white font-pixel mb-3 leading-tight">
+                    <h3 className="text-xl sm:text-2xl font-bold text-default-500 font-pixel mb-3 leading-tight">
                       {item.title[languageIndex]}
                     </h3>
                     {/* Description */}
-                    <p className="text-sm sm:text-base text-default-400 leading-relaxed font-medium max-w-md mx-auto">
+                    <p className="text-sm sm:text-base text-white leading-relaxed font-medium max-w-md mx-auto">
                       {item.description[languageIndex]}
                     </p>
                   </div>
@@ -64,11 +74,11 @@ export function HighlightsSection() {
                         {isLeft && (
                           <>
                             {/* Title */}
-                            <h3 className="text-2xl font-bold text-white font-pixel mb-3 leading-tight">
+                            <h3 className="text-2xl font-bold text-default-500 font-pixel mb-3 leading-tight">
                               {item.title[languageIndex]}
                             </h3>
                             {/* Description */}
-                            <p className="text-base text-default-400 leading-relaxed font-medium">
+                            <p className="text-base text-white leading-relaxed font-medium">
                               {item.description[languageIndex]}
                             </p>
                           </>
@@ -76,11 +86,11 @@ export function HighlightsSection() {
                         {!isLeft && (
                           <>
                             {/* Title */}
-                            <h3 className="text-2xl font-bold text-white font-pixel mb-3 leading-tight">
+                            <h3 className="text-2xl font-bold text-default-500 font-pixel mb-3 leading-tight">
                               {item.title[languageIndex]}
                             </h3>
                             {/* Description */}
-                            <p className="text-base text-default-400 leading-relaxed font-medium">
+                            <p className="text-base text-white leading-relaxed font-medium">
                               {item.description[languageIndex]}
                             </p>
                           </>

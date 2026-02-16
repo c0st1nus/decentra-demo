@@ -3,6 +3,7 @@
 import { Zap, Globe2, MapPin, Users } from "lucide-react";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
+import Image from "next/image";
 
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/context/language-provider";
@@ -19,17 +20,26 @@ export function SolanaDaySection() {
 
       <div className="max-w-5xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-12 sm:mb-16 relative">
+          <div className="hidden md:block absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-40 h-40 pointer-events-none opacity-35">
+               <Image 
+                src="/images/vectors/Vector 3.png" 
+                alt="Solana Vector" 
+                width={160} 
+                height={160} 
+                className="object-contain -rotate-25" 
+              />
+          </div>
           <div className="flex items-center justify-center gap-2 mb-4">
             <Zap className="w-5 h-5 text-secondary" />
-            <span className="text-xs font-pixel text-secondary uppercase tracking-widest">
+            <span className="text-x font-pixel text-secondary uppercase tracking-widest">
               {cfg.badge[languageIndex]}
             </span>
           </div>
           <h2 className="text-xl sm:text-3xl md:text-5xl font-bold tracking-tight mb-6 font-pixel">
             {parseStyledText(cfg.title[languageIndex])}
           </h2>
-          <p className="text-default-400 text-sm sm:text-base font-pixel">
+          <p className="text-white text-sm sm:text-base font-pixel">
             {cfg.poweredBy[languageIndex]}
           </p>
         </div>

@@ -16,8 +16,7 @@ import { Link } from "@heroui/link";
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
 import Image from "next/image";
-
-import logoWithCaption from "@/public/images/logos/logo_with_caption.webp";
+import logo from "@/public/favicon.ico";
 import { siteConfig } from "@/config/site";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { useLanguage } from "@/context/language-provider";
@@ -38,6 +37,9 @@ export const Navbar = () => {
       position="sticky"
     >
       {/* Brand */}
+      <NavbarBrand>
+        <Image src={logo} alt="Logo" width={30} height={30}/>
+      </NavbarBrand>
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         {/* Desktop Nav Links */}
         <ul className="hidden lg:flex gap-6 justify-start ml-6">

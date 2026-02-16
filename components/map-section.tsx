@@ -107,17 +107,17 @@ export function MapSection() {
     <section className="relative py-20 sm:py-32 px-4 overflow-hidden" id="locations">
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-12 sm:mb-16 relative">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Globe className="w-5 h-5 text-primary" />
-            <span className="text-xs font-mono text-primary uppercase tracking-tighter font-pixel">
+            <span className="text-x font-mono text-primary uppercase tracking-tighter font-pixel">
               {siteConfig.mapSection.badge[languageIndex]}
             </span>
           </div>
           <h2 className="text-xl sm:text-3xl md:text-4xl font-bold tracking-tighter mb-4 font-pixel">
             {parseStyledText(siteConfig.mapSection.title[languageIndex])}
           </h2>
-          <p className="text-default-400 text-base sm:text-lg max-w-xl mx-auto font-pixel">
+          <p className="text-white text-base sm:text-lg max-w-xl mx-auto font-pixel">
             {parseStyledText(siteConfig.mapSection.subtitle[languageIndex], "text-primary")}
           </p>
         </div>

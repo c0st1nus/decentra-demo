@@ -37,7 +37,7 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
           {String(value).padStart(2, "0")}
         </span>
       </div>
-      <span className="text-[10px] sm:text-xs font-pixel text-default-400 uppercase tracking-widest">
+      <span className="text-[10px] sm:text-xs font-pixel text-white uppercase tracking-widest">
         {label}
       </span>
     </div>
@@ -67,7 +67,7 @@ export function CountdownTimer() {
                 --
               </span>
             </div>
-            <span className="text-[10px] sm:text-xs font-pixel text-default-400 uppercase tracking-widest">
+            <span className="text-[10px] sm:text-xs font-pixel text-white uppercase tracking-widest">
               {label}
             </span>
           </div>

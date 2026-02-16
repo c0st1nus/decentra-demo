@@ -102,17 +102,13 @@ export function TrackCard({
           >
             {trackLabel} {String(index + 1).padStart(2, "0")}
           </Chip>
-          <Lock className="w-4 h-4 text-default-300 group-hover:text-primary/50 transition-colors" />
+          <Lock className="w-4 h-4 text-white group-hover:text-primary/50 transition-colors" />
         </CardHeader>
         <CardBody className="px-6 pb-6 pt-2">
-          <p
-            className={`font-pixel text-lg sm:text-xl tracking-wide transition-colors duration-500 ${
-              isResolved ? "text-foreground" : "text-primary/60"
-            }`}
-          >
+          <p className="font-pixel text-lg sm:text-xl tracking-wide transition-colors duration-500 text-default-500">
             {text}
           </p>
-          <p className="text-xs text-default-400 mt-3 font-pixel">
+          <p className="text-xs text-white mt-3 font-pixel">
             {isResolved ? description : decryptingLabel}
           </p>
         </CardBody>

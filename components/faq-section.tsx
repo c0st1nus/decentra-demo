@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HelpCircle } from "lucide-react";
+import Image from "next/image";
 
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/context/language-provider";
@@ -17,10 +18,10 @@ export function FaqSection() {
     <section className="relative py-20 sm:py-32 px-4" id="faq">
       <div className="max-w-3xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-12 sm:mb-16 relative">
           <div className="flex items-center justify-center gap-4 mb-2">
             <HelpCircle className="w-5 h-5 text-secondary" />
-            <span className="text-xs font-pixel text-secondary uppercase tracking-widest origin-left tra">
+            <span className="text-x font-pixel text-secondary uppercase tracking-widest origin-left tra">
               {siteConfig.faqSection.badge[languageIndex]}
             </span>
           </div>
@@ -66,7 +67,7 @@ export function FaqSection() {
                       initial={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
-                      <p className="pb-6 text-sm sm:text-base text-default-400 leading-relaxed max-w-2xl">
+                      <p className="pb-6 text-sm sm:text-base text-white leading-relaxed max-w-2xl font-pixel">
                         {item.answer[languageIndex]}
                       </p>
                     </motion.div>
