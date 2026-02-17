@@ -131,7 +131,7 @@ export default function Home() {
         >
           <Button
             as={Link}
-            className="text-sm sm:text-lg font-bold px-8 sm:px-10 h-12 sm:h-14 glow-primary font-pixel"
+            className="text-sm sm:text-lg font-bold px-2 sm:px-10 h-12 sm:h-14 glow-primary font-pixel"
             color="primary"
             href={siteConfig.links.register}
             radius="full"
@@ -144,7 +144,7 @@ export default function Home() {
           <Button
             isExternal
             as={Link}
-            className="text-sm sm:text-lg font-bold font-pixel px-8 sm:px-10 h-12 sm:h-14 border-default-200/50 hover:border-primary/50 transition-colors"
+            className="text-sm sm:text-lg font-bold font-pixel px-2 sm:px-10 h-12 sm:h-14 border-default-200/50 hover:border-primary/50 transition-colors"
             href={siteConfig.links.telegram}
             radius="full"
             size="lg"
