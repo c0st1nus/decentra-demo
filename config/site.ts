@@ -509,9 +509,9 @@ export const siteConfig = {
   },
   footer: {
     description: [
-      "Decentrathon 5.0 is the largest AI hackathon in Kazakhstan. This year, Decentrathon returns in an offline format, spanning 20 regions across the country. The event will bring together developers and AI enthusiasts to create innovative solutions, exchange knowledge, and foster the growth of the AI ecosystem in Kazakhstan.",
-      "Decentrathon 5.0 — крупнейший ИИ-хакатон в Казахстане. В этом году Decentrathon возвращается в оффлайн-формате, охватывая 20 регионов страны. Событие объединит разработчиков и энтузиастов ИИ для создания инновационных решений, обмена знаниями и развития экосистемы ИИ в Казахстане.",
-      "Decentrathon 5.0 — Қазақстандағы ең ірі AI хакатоны. Биыл Decentrathon еліміздің 20 аймағын қамтып, оффлайн форматта оралады. Іс-шара әзірлеушілер мен AI энтузиастарын инновациялық шешімдер құру, білім алмасу және Қазақстандағы AI экожүйесін дамыту үшін біріктіреді.",
+      "Decentrathon 5.0 is the largest multi-location hackathon in Kazakhstan. This year, Decentrathon returns in a hybrid format, simultaneously covering 20 cities across the country. The event will bring together developers and IT specialists to create innovative solutions, exchange knowledge, and advance the AI and blockchain ecosystem in Kazakhstan.",
+      "Decentrathon 5.0 — крупнейший мультилокационный хакатон в Казахстане. В этом году Decentrathon возвращается в гибридном формате, охватывая 20 городов страны одновременно. Событие объединит разработчиков и IT-специалистов для создания инновационных решений, обмена знаниями и развития экосистемы ИИ и блокчейн в Казахстане.",
+      "Decentrathon 5.0 — Қазақстандағы ең ірі мультилокациялық хакатон. Биыл Decentrathon гибридті форматта қайта оралып, еліміздің 20 қаласын бір уақытта қамтиды. Іс-шара әзірлеушілер мен IT-мамандарды инновациялық шешімдер жасауға, білім алмасуға және Қазақстандағы ЖИ мен блокчейн экожүйесін дамытуға біріктіреді.",
     ],
     reachOut: ["reach out to us", "связаться с нами", "бізбен байланысу"],
     email: "team@baitc.org",
