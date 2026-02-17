@@ -46,6 +46,7 @@ function CountdownUnit({ value, label }: { value: number; label: string }) {
 }
 
 export function CountdownTimer() {
+  const { languageIndex } = useLanguage();
   const [timeLeft, setTimeLeft] = useState<TimeLeft>(getTimeLeft());
   const [mounted, setMounted] = useState(false);
 
@@ -95,7 +96,7 @@ export function CountdownTimer() {
         <CountdownUnit label="Sec" value={timeLeft.seconds} />
       </div>
       <h2 className="text-[10px] sm:text-xl font-pixel text-white uppercase tracking-widest mt-10">
-        {siteConfig.event_date.caption[useLanguage().languageIndex]}
+        {siteConfig.event_date.caption[languageIndex]}
       </h2>
     </>
   );

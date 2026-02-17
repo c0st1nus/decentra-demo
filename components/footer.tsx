@@ -4,9 +4,12 @@ import { Link } from "@heroui/link";
 import Image from "next/image";
 import NextLink from "next/link";
 import { Instagram, Linkedin, Send, Globe } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { useLanguage } from "@/context/language-provider";
 import logoWithCaption from "@/public/images/logos/logo_with_caption.webp";
+import depaLogo from "@/public/images/logos/logo_depa-team.webp";
 import { siteConfig } from "@/config/site";
 
 export function Footer() {
@@ -69,12 +72,95 @@ export function Footer() {
               );
             })}
           </div>
+
+
         </div>
       </div>
 
       <div className="max-w-5xl mx-auto mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-default-400">
         <span>© 2023-{new Date().getFullYear()} Decentrathon. All rights reserved.</span>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-default-400">Powered by</span>
+          <PressableDepaLogo />
+        </div>
       </div>
     </footer>
+  );
+}
+
+function PressableDepaLogo() {
+  const [particles, setParticles] = useState<
+    {
+      id: number;
+      x: number;
+      yPeak: number;
+      rotation: number;
+      duration: number;
+    }[]
+  >([]);
+
+  const handlePress = () => {
+    const id = Date.now() + Math.random();
+    const duration = 2 + Math.random() * 2; // Random duration between 2s and 4s
+    setParticles((prev) => [
+      ...prev,
+      {
+        id,
+        x: Math.random() * 300 - 150, // Random X direction (-150 to 150)
+        yPeak: Math.random() * -150 - 50, // Random jump height (-50 to -200)
+        rotation: Math.random() * 720 - 360, // Random rotation
+        duration,
+      },
+    ]);
+    setTimeout(() => {
+      setParticles((prev) => prev.filter((p) => p.id !== id));
+    }, duration * 1000);
+  };
+
+  return (
+    <div
+      className="relative flex items-center gap-2 cursor-pointer select-none group"
+      onClick={handlePress}
+    >
+      <span className="text-xs font-bold text-white group-hover:text-primary transition-colors">
+        Depa Team
+      </span>
+      <Image
+        alt="Depa Team"
+        className="w-6 h-6 rounded-full object-cover"
+        src={depaLogo}
+      />
+      <AnimatePresence>
+        {particles.map((particle) => (
+          <motion.div
+            key={particle.id}
+            initial={{ opacity: 0, scale: 0.5, y: 0, x: 0, rotate: 0 }}
+            animate={{
+              opacity: [0, 1, 1, 0],
+              scale: [0.5, 2.5, 1.5], // Scales up larger
+              y: [0, particle.yPeak, particle.yPeak + 300], // Goes up, then falls down
+              x: particle.x,
+              rotate: particle.rotation,
+            }}
+            transition={{
+              duration: particle.duration,
+              times: [0, 0.4, 1], // Timing of the keyframes
+              ease: ["easeOut", "easeIn"], // Improve gravity feel
+            }}
+            className="absolute left-1/2 top-1/2 pointer-events-none z-50 origin-center"
+            style={{ marginLeft: "-24px", marginTop: "-24px" }}
+          >
+            <video
+              src="/images/vectors/gif.webm"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-32 h-32 object-contain"
+            />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </div>
   );
 }
