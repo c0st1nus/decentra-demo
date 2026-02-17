@@ -12,6 +12,7 @@ import {
 import Image from "next/image";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
+
 import partners from "@/public/images/about_us/partners.webp";
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/context/language-provider";
@@ -30,14 +31,14 @@ export function AboutSection() {
       <div className="max-w-5xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16 relative">
-          <div className="hidden md:block absolute left-1/4 top-0 -translate-x-full -translate-y-1/2 w-24 h-24 pointer-events-none">
-              <Image 
-                src="/images/vectors/Vector 3.png" 
-                alt="About Vector" 
-                width={100} 
-                height={100} 
-                className="object-contain -rotate-12 opacity-60" 
-              />
+          <div className="hidden md:block absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 w-24 h-24 pointer-events-none">
+            <Image
+              alt="About Vector Right"
+              className="object-contain rotate-12 opacity-60"
+              height={100}
+              src="/images/vectors/Vector 3.png"
+              width={100}
+            />
           </div>
           <div className="flex items-center justify-center gap-2 mb-4">
             <History className="w-5 h-5 text-primary" />
@@ -106,9 +107,9 @@ export function AboutSection() {
           </div>
         </div>
         <Image
-          src={partners}
           alt={"Partners"}
           className="transition-transform duration-700 group-hover:scale-110 mx-auto mb-12"
+          src={partners}
         />
         {/* Photos Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 auto-rows-[200px]">
@@ -133,11 +134,11 @@ export function AboutSection() {
               className={`relative rounded-2xl overflow-hidden group border border-white/10 ${photo.className}`}
             >
               <Image
-                src={`/images/about_us/photo_${photo.id}.webp`}
-                alt={`About Us Photo ${photo.id}`}
                 fill
+                alt={`About Us Photo ${photo.id}`}
                 className="object-cover transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                src={`/images/about_us/photo_${photo.id}.webp`}
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
             </div>

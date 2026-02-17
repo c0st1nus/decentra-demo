@@ -117,7 +117,7 @@ export function SpaceBg() {
       ctx.fillStyle = "black";
       ctx.fillRect(0, 0, w, h);
 
-      ctx.fillStyle = "white";
+      ctx.fillStyle = `rgb(${PRIMARY})`;
 
       // ── Update and Draw stars ──
       for (let i = 0; i < count; i++) {

@@ -16,14 +16,14 @@ export function TracksSection() {
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 relative">
-          <div className="hidden md:block absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 pointer-events-none opacity-60">
-              <Image 
-                src="/images/vectors/Vector.png" 
-                alt="Tracks Vector" 
-                width={150} 
-                height={150} 
-                className="object-contain -rotate-45" 
-              />
+          <div className="hidden md:block absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 pointer-events-none opacity-25">
+            <Image
+              alt="Tracks Vector"
+              className="object-contain -rotate-45"
+              height={150}
+              src="/images/vectors/Vector.png"
+              width={150}
+            />
           </div>
           <div className="flex items-center justify-center gap-2 mb-4">
             <Cpu className="w-5 h-5 text-secondary" />

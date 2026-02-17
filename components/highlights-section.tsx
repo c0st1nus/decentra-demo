@@ -20,13 +20,13 @@ export function HighlightsSection() {
         {/* Header */}
         <div className="text-center mb-16 sm:mb-24 relative">
           <div className="hidden md:block absolute right-0 top-0 translate-x-1/2 -translate-y-1/2 w-48 h-48 pointer-events-none opacity-50">
-               <Image 
-                src="/images/vectors/Vector 2.png" 
-                alt="Highlights Flow" 
-                width={200} 
-                height={200} 
-                className="object-contain rotate-40" 
-              />
+            <Image
+              alt="Highlights Flow"
+              className="object-contain rotate-40"
+              height={200}
+              src="/images/vectors/Vector 2.png"
+              width={200}
+            />
           </div>
           <div className="flex items-center justify-center gap-2 mb-6">
             <Star className="w-5 h-5 text-primary" />

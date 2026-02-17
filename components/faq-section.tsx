@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HelpCircle } from "lucide-react";
-import Image from "next/image";
 
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/context/language-provider";
@@ -68,7 +67,30 @@ export function FaqSection() {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                       <p className="pb-6 text-sm sm:text-base text-white leading-relaxed max-w-2xl font-pixel">
-                        {item.answer[languageIndex]}
+                        {(() => {
+                          const text = item.answer[languageIndex];
+                          const parts = text.split(/(\[.*?\]\(.*?\))/g);
+
+                          return parts.map((part, i) => {
+                            const match = part.match(/\[(.*?)\]\((.*?)\)/);
+
+                            if (match) {
+                              return (
+                                <a
+                                  key={i}
+                                  className="text-primary hover:underline underline-offset-4"
+                                  href={match[2]}
+                                  rel="noopener noreferrer"
+                                  target="_blank"
+                                >
+                                  {match[1]}
+                                </a>
+                              );
+                            }
+
+                            return part;
+                          });
+                        })()}
                       </p>
                     </motion.div>
                   )}

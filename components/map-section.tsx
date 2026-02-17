@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-noninteractive-tabindex */
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -206,10 +207,23 @@ export function MapSection() {
 
         {/* Navigation Slider */}
         <div className="relative w-full px-4 sm:px-12">
+          {}
           <div
             ref={sliderRef}
+            aria-label="Map Navigation Slider"
             className="flex gap-4 overflow-x-auto no-scrollbar py-4 px-2 cursor-grab active:cursor-grabbing select-none"
+            role="region"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowLeft") {
+                e.preventDefault();
+                if (sliderRef.current) sliderRef.current.scrollLeft -= 50;
+              } else if (e.key === "ArrowRight") {
+                e.preventDefault();
+                if (sliderRef.current) sliderRef.current.scrollLeft += 50;
+              }
+            }}
             onMouseDown={handleMouseDown}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}

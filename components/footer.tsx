@@ -72,8 +72,6 @@ export function Footer() {
               );
             })}
           </div>
-
-
         </div>
       </div>
 
@@ -102,6 +100,7 @@ function PressableDepaLogo() {
   const handlePress = () => {
     const id = Date.now() + Math.random();
     const duration = 2 + Math.random() * 2; // Random duration between 2s and 4s
+
     setParticles((prev) => [
       ...prev,
       {
@@ -118,23 +117,19 @@ function PressableDepaLogo() {
   };
 
   return (
-    <div
-      className="relative flex items-center gap-2 cursor-pointer select-none group"
+    <button
+      className="relative flex items-center gap-2 cursor-pointer select-none group bg-transparent border-none p-0"
+      type="button"
       onClick={handlePress}
     >
       <span className="text-xs font-bold text-white group-hover:text-primary transition-colors">
         Depa Team
       </span>
-      <Image
-        alt="Depa Team"
-        className="w-6 h-6 rounded-full object-cover"
-        src={depaLogo}
-      />
+      <Image alt="Depa Team" className="w-6 h-6 rounded-full object-cover" src={depaLogo} />
       <AnimatePresence>
         {particles.map((particle) => (
           <motion.div
             key={particle.id}
-            initial={{ opacity: 0, scale: 0.5, y: 0, x: 0, rotate: 0 }}
             animate={{
               opacity: [0, 1, 1, 0],
               scale: [0.5, 2.5, 1.5], // Scales up larger
@@ -142,25 +137,26 @@ function PressableDepaLogo() {
               x: particle.x,
               rotate: particle.rotation,
             }}
+            className="absolute left-1/2 top-1/2 pointer-events-none z-50 origin-center"
+            initial={{ opacity: 0, scale: 0.5, y: 0, x: 0, rotate: 0 }}
+            style={{ marginLeft: "-24px", marginTop: "-24px" }}
             transition={{
               duration: particle.duration,
               times: [0, 0.4, 1], // Timing of the keyframes
               ease: ["easeOut", "easeIn"], // Improve gravity feel
             }}
-            className="absolute left-1/2 top-1/2 pointer-events-none z-50 origin-center"
-            style={{ marginLeft: "-24px", marginTop: "-24px" }}
           >
             <video
-              src="/images/vectors/gif.webm"
               autoPlay
               loop
               muted
               playsInline
               className="w-32 h-32 object-contain"
+              src="/images/vectors/gif.webm"
             />
           </motion.div>
         ))}
       </AnimatePresence>
-    </div>
+    </button>
   );
 }

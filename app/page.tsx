@@ -4,7 +4,6 @@ import { useState, useCallback } from "react";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { MapPin, Zap, MessageCircle } from "lucide-react";
 import dynamic from "next/dynamic";
 
@@ -20,13 +19,9 @@ const MapSection = dynamic(() => import("@/components/map-section").then((mod) =
   ssr: false,
   loading: () => <div className="h-[600px] w-full bg-black/20 animate-pulse" />,
 });
-const SolanaDaySection = dynamic(
-  () => import("@/components/solana-day-section").then((mod) => mod.SolanaDaySection),
-  {
-    ssr: false,
-    loading: () => <div className="h-[400px] w-full bg-black/20 animate-pulse" />,
-  },
-);
+
+// Removed SolanaDaySection
+
 const TracksSection = dynamic(
   () => import("@/components/tracks-section").then((mod) => mod.TracksSection),
   {
@@ -65,7 +60,6 @@ type Phase = "title" | "version" | "done";
 export default function Home() {
   const [phase, setPhase] = useState<Phase>("title");
   const handleTitleComplete = useCallback(() => setPhase("version"), []);
-  const handleVersionComplete = useCallback(() => setPhase("done"), []);
 
   return (
     <>

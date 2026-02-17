@@ -22,13 +22,13 @@ export function SolanaDaySection() {
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16 relative">
           <div className="hidden md:block absolute left-0 top-0 -translate-x-1/2 -translate-y-1/2 w-40 h-40 pointer-events-none opacity-35">
-               <Image 
-                src="/images/vectors/Vector 3.png" 
-                alt="Solana Vector" 
-                width={160} 
-                height={160} 
-                className="object-contain -rotate-25" 
-              />
+            <Image
+              alt="Solana Vector"
+              className="object-contain -rotate-25"
+              height={160}
+              src="/images/vectors/Vector 3.png"
+              width={160}
+            />
           </div>
           <div className="flex items-center justify-center gap-2 mb-4">
             <Zap className="w-5 h-5 text-secondary" />

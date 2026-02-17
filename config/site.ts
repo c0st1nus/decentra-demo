@@ -281,7 +281,7 @@ export const siteConfig = {
       ],
       answer: [
         "First 3 days: You can work offline at one of the official locations across Kazakhstan. Remaining days: The hackathon continues online. Teams finalize and submit their projects remotely.",
-        "Первые 3 дня: Работаем оффлайн на официальных локациях по всему Казахстану. Остальное время: Хакатон продолжается в онлайн-режиме, где команды финализируют и сдают свои проекты.",
+        "Первый день: Работаем оффлайн на официальных локациях по всему Казахстану. Остальное время: Хакатон продолжается в онлайн-режиме, где команды финализируют и сдают свои проекты.",
         "Алғашқы 3 күн: Қазақстан бойынша ресми локацияларда оффлайн жұмыс істейміз. Қалған уақытта: Хакатон онлайн форматта жалғасады, командалар жобаларын аяқтап, қашықтан тапсырады.",
       ],
     },
@@ -305,7 +305,7 @@ export const siteConfig = {
       ],
       answer: [
         "You may join online from any city. Offline attendance during the first 3 days is optional but recommended for networking and atmosphere.",
-        "Да, вы можете подключиться из любого города. Оффлайн-присутствие в первые 3 дня желательно для нетворкинга, но не обязательно.",
+        "Да, вы можете подключиться из любого города. Оффлайн-присутствие в первый день желательно для нетворкинга, но не обязательно.",
         "Иә, кез келген қаладан қосыла аласыз. Алғашқы 3 күнде оффлайн қатысу нетворкинг үшін пайдалы, бірақ міндетті емес.",
       ],
     },
@@ -316,9 +316,9 @@ export const siteConfig = {
         "Егер командам болмаса не істеймін?",
       ],
       answer: [
-        "No team? No problem. Connect with fellow builders in our Decentrathon Telegram community or go solo — great ideas can come from anywhere.",
-        "Нет команды? Не беда! Найди единомышленников в нашем Telegram-сообществе Decentrathon или участвуй соло — крутые идеи могут родиться и в одиночку.",
-        "Команда жоқ па? Ештеңе етпейді! Біздің Decentrathon Telegram қауымдастығында серіктестер тап немесе жеке қатыс — керемет идеялар жалғыз да тууы мүмкін.",
+        "No team? No problem. Connect with fellow builders in our Decentrathon [Telegram community](https://t.me/+BF7-mS199-Q4YjAy) or go solo — great ideas can come from anywhere.",
+        "Нет команды? Не беда! Найди единомышленников в нашем [Telegram-сообществе Decentrathon](https://t.me/+BF7-mS199-Q4YjAy) или участвуй соло — крутые идеи могут родиться и в одиночку.",
+        "Команда жоқ па? Ештеңе етпейді! Біздің Decentrathon [Telegram қауымдастығында](https://t.me/+BF7-mS199-Q4YjAy) серіктестер тап немесе жеке қатыс — керемет идеялар жалғыз да тууы мүмкін.",
       ],
     },
     {
@@ -336,9 +336,9 @@ export const siteConfig = {
         "Сұрағыңызға жауап таппадыңыз ба?",
       ],
       answer: [
-        "Jump into our Telegram community — our team and fellow hackers are always ready to help. It's the fastest way to get answers and stay in the loop.",
-        "Заглядывай в наше Telegram-комьюнити! Команда и другие участники всегда на связи. Это самый быстрый способ получить инсайд и помощь.",
-        "Біздің Telegram қауымдастығымызға қосылыңыз! Ұйымдастырушылар мен басқа қатысушылар әрқашан көмекке дайын. Бұл жауап алудың ең жылдам жолы.",
+        "Jump into our [Telegram community](https://t.me/+BF7-mS199-Q4YjAy) — our team and fellow hackers are always ready to help. It's the fastest way to get answers and stay in the loop.",
+        "Заглядывай в наше [Telegram-комьюнити](https://t.me/+BF7-mS199-Q4YjAy)! Команда и другие участники всегда на связи. Это самый быстрый способ получить инсайд и помощь.",
+        "Біздің [Telegram қауымдастығымызға](https://t.me/+BF7-mS199-Q4YjAy) қосылыңыз! Ұйымдастырушылар мен басқа қатысушылар әрқашан көмекке дайын. Бұл жауап алудың ең жылдам жолы.",
       ],
     },
   ],
@@ -369,12 +369,16 @@ export const siteConfig = {
     decrypting: ["Decrypting...", "Расшифровка...", "Шифр шешілуде..."],
   },
   heroLabels: {
-    register: ["Register Now", "Подать заявку", "Өтінім беру"],
+    register: ["Register Now", "Зарегистрироваться", "Тіркелу"],
     telegram: ["Join Our Community", "Вступить в комьюнити", "Қауымдастыққа қосылу"],
-    locations: ["20+ cities • Offline", "20+ городов • Оффлайн", "20+ қала • Оффлайн"],
+    locations: [
+      "20+ cities • Offline + Online",
+      "20+ городов • Оффлайн + Онлайн",
+      "20+ қала • Оффлайн + Онлайн",
+    ],
   },
   links: {
-    register: "#register",
+    register: "https://forms.gle/r8vj3JJDBBUNbyPW6",
     telegram: "https://t.me/+BF7-mS199-Q4YjAy",
   },
   solanaDay: {

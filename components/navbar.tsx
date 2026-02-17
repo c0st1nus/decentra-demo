@@ -16,6 +16,7 @@ import { Link } from "@heroui/link";
 import { link as linkStyles } from "@heroui/theme";
 import clsx from "clsx";
 import Image from "next/image";
+
 import logo from "@/public/favicon.ico";
 import { siteConfig } from "@/config/site";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -33,12 +34,12 @@ export const Navbar = () => {
       }}
       isMenuOpen={isMenuOpen}
       maxWidth="full"
-      onMenuOpenChange={setIsMenuOpen}
       position="sticky"
+      onMenuOpenChange={setIsMenuOpen}
     >
       {/* Brand */}
       <NavbarBrand>
-        <Image src={logo} alt="Logo" width={30} height={30}/>
+        <Image alt="Logo" height={30} src={logo} width={30} />
       </NavbarBrand>
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         {/* Desktop Nav Links */}

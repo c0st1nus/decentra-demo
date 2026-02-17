@@ -16,13 +16,13 @@ export function PartnersSection() {
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16 relative">
           <div className="hidden md:block absolute right-10 top-0 translate-x-full w-24 h-24 pointer-events-none opacity-40">
-              <Image 
-                src="/images/vectors/Vector 3.png" 
-                alt="Partners Vector" 
-                width={100} 
-                height={100} 
-                className="object-contain rotate-40" 
-              />
+            <Image
+              alt="Partners Vector"
+              className="object-contain rotate-40"
+              height={100}
+              src="/images/vectors/Vector 3.png"
+              width={100}
+            />
           </div>
           <div className="flex items-center justify-center gap-2 mb-4">
             <Handshake className="w-5 h-5 text-primary" />
