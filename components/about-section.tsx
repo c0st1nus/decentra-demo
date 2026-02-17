@@ -145,14 +145,14 @@ export function AboutSection() {
         </div>
 
         {/* CTA */}
-        <div className="text-center px-4">
+        <div className="text-center">
           <Button
             isExternal
             as={Link}
-            className="text-sm sm:text-lg font-bold font-pixel px-8 sm:px-10 h-12 sm:h-14 border-default-200/50 hover:border-primary/50 transition-colors"
+            className="text-sm sm:text-md font-bold font-pixel px-2 h-12 sm:h-14 border-default-200/50 hover:border-primary/50 transition-colors"
             href={siteConfig.links.telegram}
             radius="full"
-            size="lg"
+            size="sm"
             startContent={<MessageCircle className="w-5 h-5" />}
             variant="bordered"
           >
