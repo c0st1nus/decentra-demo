@@ -48,7 +48,10 @@ export const siteConfig = {
       href: "#register",
     },
   ],
-  event_date: "2026-03-27T10:00:00+06:00",
+  event_date: {
+    timer_date: "2026-03-27T10:00:00+06:00",
+    caption: ["27 March - 5 April", "27 марта - 5 апреля", "27 наурыз - 5 сәуір"],
+  },
   regions: [
     {
       id: "astana",

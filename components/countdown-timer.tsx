@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 
 import { siteConfig } from "@/config/site";
+import { useLanguage } from "@/context/language-provider";
 
 interface TimeLeft {
   days: number;
@@ -11,7 +12,7 @@ interface TimeLeft {
   seconds: number;
 }
 
-const EVENT_DATE = new Date(siteConfig.event_date);
+const EVENT_DATE = new Date(siteConfig.event_date.timer_date);
 
 function getTimeLeft(): TimeLeft {
   const now = new Date().getTime();
@@ -77,20 +78,25 @@ export function CountdownTimer() {
   }
 
   return (
-    <div className="flex gap-2 sm:gap-4">
-      <CountdownUnit label="Days" value={timeLeft.days} />
-      <span className="text-xl sm:text-4xl font-pixel text-primary/30 self-start mt-2 sm:mt-4">
-        :
-      </span>
-      <CountdownUnit label="Hours" value={timeLeft.hours} />
-      <span className="text-xl sm:text-4xl font-pixel text-primary/30 self-start mt-2 sm:mt-4">
-        :
-      </span>
-      <CountdownUnit label="Min" value={timeLeft.minutes} />
-      <span className="text-xl sm:text-4xl font-pixel text-primary/30 self-start mt-2 sm:mt-4">
-        :
-      </span>
-      <CountdownUnit label="Sec" value={timeLeft.seconds} />
-    </div>
+    <>
+      <div className="flex gap-2 sm:gap-4">
+        <CountdownUnit label="Days" value={timeLeft.days} />
+        <span className="text-xl sm:text-4xl font-pixel text-primary/30 self-start mt-2 sm:mt-4">
+          :
+        </span>
+        <CountdownUnit label="Hours" value={timeLeft.hours} />
+        <span className="text-xl sm:text-4xl font-pixel text-primary/30 self-start mt-2 sm:mt-4">
+          :
+        </span>
+        <CountdownUnit label="Min" value={timeLeft.minutes} />
+        <span className="text-xl sm:text-4xl font-pixel text-primary/30 self-start mt-2 sm:mt-4">
+          :
+        </span>
+        <CountdownUnit label="Sec" value={timeLeft.seconds} />
+      </div>
+      <h2 className="text-[10px] sm:text-xl font-pixel text-white uppercase tracking-widest mt-10">
+        {siteConfig.event_date.caption[useLanguage().languageIndex]}
+      </h2>
+    </>
   );
 }

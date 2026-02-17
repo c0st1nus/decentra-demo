@@ -161,8 +161,8 @@ export default function Home() {
 
       <div className="section-divider" />
       <MapSection />
-      <div className="section-divider" />
-      <SolanaDaySection />
+      {/* <div className="section-divider" />
+      <SolanaDaySection /> */}
       <div className="section-divider" />
       <TracksSection />
       <div className="section-divider" />
