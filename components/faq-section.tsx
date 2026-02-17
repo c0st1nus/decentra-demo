@@ -64,7 +64,7 @@ export function FaqSection() {
                       initial={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
-                      <p className="pb-6 text-sm sm:text-base text-white leading-relaxed max-w-2xl font-pixel">
+                      <p className="pb-6 text-sm sm:text-base text-white leading-relaxed max-w-2xl font-sans">
                         {(() => {
                           const text = item.answer[languageIndex];
                           const parts = text.split(/(\[.*?\]\(.*?\))/g);

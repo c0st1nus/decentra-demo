@@ -370,7 +370,7 @@ export const siteConfig = {
   },
   heroLabels: {
     register: ["Register Now", "Зарегистрироваться", "Тіркелу"],
-    telegram: ["Join Our Community", "Вступить в комьюнити", "Қауымдастыққа қосылу"],
+    telegram: ["Join Our Community", "Вступить в комьюнити", "Комьюнитиге қосылу"],
     locations: [
       "20+ cities • Offline + Online",
       "20+ городов • Оффлайн + Онлайн",
