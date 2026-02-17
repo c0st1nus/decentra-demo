@@ -169,25 +169,25 @@ export function MapSection() {
               <div className="relative h-48 w-full overflow-hidden">
                 <Image
                   fill
-                  alt={activeData.name}
+                  alt={activeData.name[languageIndex]}
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
                   src={activeData.image}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                 <div className="absolute bottom-4 left-4">
-                  <h3 className="text-2xl font-bold text-white font-mono">{activeData.name}</h3>
+                  <h3 className="text-2xl font-bold text-white font-mono">{activeData.name[languageIndex]}</h3>
                 </div>
               </div>
 
               <div className="p-6 space-y-4">
                 <div>
                   <h4 className="text-lg font-semibold text-primary mb-1 font-pixel">
-                    {activeData.title}
+                    {activeData.title[languageIndex]}
                   </h4>
                   <div className="flex items-start gap-2 text-default-400">
                     <MapPin className="w-4 h-4 mt-1 shrink-0 text-primary/80" />
-                    <p className="text-sm">{activeData.address}</p>
+                    <p className="text-sm">{activeData.address[languageIndex]}</p>
                   </div>
                 </div>
 
@@ -249,7 +249,7 @@ export function MapSection() {
                     data-region-id={region.id}
                     onClick={() => handleRegionClick(region.id)}
                   >
-                    {region.name}
+                    {region.name[languageIndex]}
                   </button>
                 );
               },
@@ -258,12 +258,13 @@ export function MapSection() {
         </div>
 
         {/* Register Button */}
-        <div className="text-center mt-12 px-4">
+        <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full max-w-[calc(100vw-32px)] sm:max-w-none items-center justify-center">
           <Button
             as={Link}
-            className="text-sm sm:text-lg font-bold px-8 sm:px-10 h-12 sm:h-14 glow-primary font-pixel"
+            className="btn-hero glow-primary"
             color="primary"
             href={siteConfig.links.register}
+            isExternal
             radius="full"
             size="lg"
             startContent={<Zap className="w-5 h-5" />}

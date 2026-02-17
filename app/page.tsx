@@ -20,6 +20,14 @@ const MapSection = dynamic(() => import("@/components/map-section").then((mod) =
   loading: () => <div className="h-[600px] w-full bg-black/20 animate-pulse" />,
 });
 
+const QuotesSection = dynamic(
+  () => import("@/components/quotes").then((mod) => mod.QuotesSection),
+  {
+    ssr: false,
+    loading: () => <div className="h-[400px] w-full bg-black/20 animate-pulse" />,
+  },
+);
+
 // Removed SolanaDaySection
 
 const TracksSection = dynamic(
@@ -86,7 +94,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 30 }}
           transition={{ duration: 0.7, delay: 0.3 }}
         >
-          <h1 className="text-gradient text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-black tracking-tight leading-tight font-pixel flex flex-wrap justify-center items-center gap-2 sm:gap-4">
+          <h1 className="text-gradient heading-hero">
             <TerminalInput
               delay={0.5}
               showCursor={phase === "title"}
@@ -119,13 +127,13 @@ export default function Home() {
         {/* CTA Buttons */}
         <motion.div
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col sm:flex-row gap-4 mt-4"
+          className="flex flex-col sm:flex-row gap-4 mt-4 w-full max-w-[calc(100vw-32px)] sm:max-w-none items-center justify-center"
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.9 }}
         >
           <Button
             as={Link}
-            className="text-sm sm:text-lg font-bold px-2 sm:px-10 h-12 sm:h-14 glow-primary font-pixel"
+            className="btn-hero glow-primary"
             color="primary"
             href={siteConfig.links.register}
             isExternal
@@ -139,10 +147,10 @@ export default function Home() {
           <Button
             isExternal
             as={Link}
-            className="text-sm sm:text-lg font-bold font-pixel px-2 sm:px-10 h-12 sm:h-14 border-default-200/50 hover:border-primary/50 transition-colors"
+            className="btn-hero border-default-200/50 hover:border-primary/50 transition-colors"
             href={siteConfig.links.telegram}
             radius="full"
-            size="lg"
+            size="sm"
             startContent={<MessageCircle className="w-5 h-5" />}
             variant="bordered"
           >
@@ -154,6 +162,8 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#000000] to-transparent pointer-events-none" />
       </section>
 
+      <div className="section-divider" />
+      <QuotesSection />
       <div className="section-divider" />
       <MapSection />
       {/* <div className="section-divider" />

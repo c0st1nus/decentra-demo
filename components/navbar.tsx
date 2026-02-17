@@ -49,7 +49,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "text-sm font-medium text-default-500 hover:text-primary transition-colors duration-200 font-pixel",
+                  "nav-link",
                 )}
                 href={item.href}
               >

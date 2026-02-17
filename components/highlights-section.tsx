@@ -66,49 +66,37 @@ export function HighlightsSection() {
                     </p>
                   </div>
 
-                  {/* Desktop - Timeline Layout */}
-                  <div className="hidden md:grid md:grid-cols-2 md:gap-16 items-start">
-                    {/* Left Side */}
-                    <div className={clsx("flex justify-end", !isLeft && "order-2 justify-start")}>
-                      <div className={clsx("max-w-sm", isLeft ? "text-right" : "text-left")}>
-                        {isLeft && (
-                          <>
-                            {/* Title */}
-                            <h3 className="text-2xl font-bold text-default-500 font-pixel mb-3 leading-tight">
-                              {item.title[languageIndex]}
-                            </h3>
-                            {/* Description */}
-                            <p className="text-base text-white leading-relaxed font-medium">
-                              {item.description[languageIndex]}
-                            </p>
-                          </>
-                        )}
-                        {!isLeft && (
-                          <>
-                            {/* Title */}
-                            <h3 className="text-2xl font-bold text-default-500 font-pixel mb-3 leading-tight">
-                              {item.title[languageIndex]}
-                            </h3>
-                            {/* Description */}
-                            <p className="text-base text-white leading-relaxed font-medium">
-                              {item.description[languageIndex]}
-                            </p>
-                          </>
-                        )}
+                  {/* Desktop - Timeline Layout (Grid) */}
+                  <div className="hidden md:grid md:grid-cols-[1fr_auto_1fr] md:gap-8 items-start">
+                    {/* Left Side Content */}
+                    <div className={clsx("flex justify-end", !isLeft && "invisible")}>
+                      <div className="max-w-sm text-right pt-2">
+                        <h3 className="text-2xl font-bold text-default-500 font-pixel mb-3 leading-tight">
+                          {item.title[languageIndex]}
+                        </h3>
+                        <p className="text-base text-white leading-relaxed font-medium">
+                          {item.description[languageIndex]}
+                        </p>
                       </div>
                     </div>
 
-                    {/* Right Side (or Left if odd) */}
-                    <div className={clsx(!isLeft && "order-1")}>
-                      {/* Empty space to maintain grid */}
+                    {/* Center: Badge */}
+                    <div className="relative flex justify-center z-20">
+                      <div className="w-12 h-12 rounded-full border-2 border-primary bg-black text-primary font-bold font-sans text-xl flex items-center justify-center shadow-[0_0_20px_rgba(140,216,18,0.5)]">
+                        {i + 1}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Center Dot with Number Badge (desktop only) */}
-                  <div className="hidden md:flex absolute left-1/2 top-0 -translate-x-1/2 flex-col items-center">
-                    {/* Number Badge */}
-                    <div className="w-12 h-12 rounded-full border-2 border-primary bg-black text-primary font-bold font-sans text-xl flex items-center justify-center shadow-[0_0_20px_rgba(140,216,18,0.5)] relative z-10">
-                      {i + 1}
+                    {/* Right Side Content */}
+                    <div className={clsx("flex justify-start", isLeft && "invisible")}>
+                      <div className="max-w-sm text-left pt-2">
+                        <h3 className="text-2xl font-bold text-default-500 font-pixel mb-3 leading-tight">
+                          {item.title[languageIndex]}
+                        </h3>
+                        <p className="text-base text-white leading-relaxed font-medium">
+                          {item.description[languageIndex]}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -119,7 +107,7 @@ export function HighlightsSection() {
         <div className="flex justify-center items-center px-4">
           <Button
             as={Link}
-            className="text-sm sm:text-lg font-bold px-8 sm:px-10 h-12 sm:h-14 glow-primary font-pixel"
+            className="btn-hero glow-primary"
             color="primary"
             href={siteConfig.links.register}
             radius="full"

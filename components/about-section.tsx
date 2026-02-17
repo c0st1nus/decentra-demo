@@ -150,7 +150,7 @@ export function AboutSection() {
           <Button
             isExternal
             as={Link}
-            className="text-sm sm:text-md font-bold font-pixel px-2 h-12 sm:h-14 border-default-200/50 hover:border-primary/50 transition-colors"
+            className="btn-hero border-default-200/50 hover:border-primary/50 transition-colors"
             href={siteConfig.links.telegram}
             radius="full"
             size="sm"

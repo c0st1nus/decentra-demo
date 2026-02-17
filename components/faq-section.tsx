@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { HelpCircle } from "lucide-react";
+import { HelpCircle, Plus } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/context/language-provider";
@@ -20,7 +20,7 @@ export function FaqSection() {
         <div className="text-center mb-12 sm:mb-16 relative">
           <div className="flex items-center justify-center gap-4 mb-2">
             <HelpCircle className="w-5 h-5 text-secondary" />
-            <span className="text-x font-pixel text-secondary uppercase tracking-widest origin-left tra">
+            <span className="text-xs font-pixel text-secondary uppercase tracking-widest origin-left tra">
               {siteConfig.faqSection.badge[languageIndex]}
             </span>
           </div>
@@ -38,7 +38,7 @@ export function FaqSection() {
               <div key={index} className="border-t border-white/10">
                 <button
                   aria-expanded={isOpen}
-                  className="faq-trigger group flex w-full items-center justify-between gap-2 sm:gap-4 py-5 sm:py-6 text-left cursor-pointer"
+                  className="faq-trigger group flex w-full items-start justify-between gap-2 sm:gap-4 py-5 sm:py-6 text-left cursor-pointer"
                   onClick={() => toggle(index)}
                 >
                   <span className="text-[10px] sm:text-sm md:text-lg font-pixel font-medium text-foreground uppercase tracking-wide leading-snug origin-left">
@@ -47,12 +47,10 @@ export function FaqSection() {
 
                   {/* +/× icon */}
                   <span className="faq-icon-wrapper relative flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full border border-primary/30 transition-colors duration-300 group-hover:border-secondary group-hover:bg-secondary/10">
-                    <span
-                      className="block text-xl sm:text-2xl leading-none text-primary font-light select-none transition-transform duration-200"
+                    <Plus
+                      className="w-5 h-5 sm:w-6 sm:h-6 text-primary transition-transform duration-200"
                       style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
-                    >
-                      +
-                    </span>
+                    />
                   </span>
                 </button>
 

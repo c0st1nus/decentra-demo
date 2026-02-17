@@ -197,6 +197,7 @@ html.dark body {
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  scrollbar-gutter: stable;
 }
 
 /* ── Hero fade-in animation ──────────────────────────────────── */
@@ -231,5 +232,20 @@ html {
 
   .grid-bg::after {
     animation: none;
+  }
+}
+
+/* ── Component Abstractions ──────────────────────────────────── */
+@layer components {
+  .nav-link {
+    @apply text-sm font-medium text-default-500 hover:text-primary transition-colors duration-200 font-pixel;
+  }
+
+  .btn-hero {
+    @apply text-sm sm:text-lg font-bold px-4 sm:px-10 min-h-12 !h-auto py-2 sm:min-h-14 font-pixel !whitespace-normal text-center leading-tight max-w-full w-full sm:w-auto;
+  }
+
+  .heading-hero {
+    @apply text-2xl sm:text-3xl md:text-5xl lg:text-7xl font-black tracking-tight leading-tight font-pixel flex flex-wrap justify-center items-center gap-2 sm:gap-4;
   }
 }
