@@ -128,6 +128,7 @@ export default function Home() {
             className="text-sm sm:text-lg font-bold px-2 sm:px-10 h-12 sm:h-14 glow-primary font-pixel"
             color="primary"
             href={siteConfig.links.register}
+            isExternal
             radius="full"
             size="lg"
             startContent={<Zap className="w-5 h-5" />}

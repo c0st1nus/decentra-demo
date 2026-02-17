@@ -280,9 +280,9 @@ export const siteConfig = {
         "10 күндік формат қалай жұмыс істейді?",
       ],
       answer: [
-        "First 3 days: You can work offline at one of the official locations across Kazakhstan. Remaining days: The hackathon continues online. Teams finalize and submit their projects remotely.",
+        "Day 1: We work offline at official locations across Kazakhstan. The rest of the time: The hackathon continues online, where teams finalize and submit their projects.",
         "Первый день: Работаем оффлайн на официальных локациях по всему Казахстану. Остальное время: Хакатон продолжается в онлайн-режиме, где команды финализируют и сдают свои проекты.",
-        "Алғашқы 3 күн: Қазақстан бойынша ресми локацияларда оффлайн жұмыс істейміз. Қалған уақытта: Хакатон онлайн форматта жалғасады, командалар жобаларын аяқтап, қашықтан тапсырады.",
+        "Бірінші күн: Қазақстан бойынша ресми локацияларда оффлайн жұмыс істейміз. Қалған уақытта: Хакатон онлайн форматта жалғасады, командалар жобаларын аяқтап, қашықтан тапсырады.",
       ],
     },
     {
@@ -304,9 +304,9 @@ export const siteConfig = {
         "Толығымен онлайн қатысуға бола ма?",
       ],
       answer: [
-        "You may join online from any city. Offline attendance during the first 3 days is optional but recommended for networking and atmosphere.",
+        "Yes, you can join from any city. Offline attendance on the first day is recommended for networking, but not mandatory.",
         "Да, вы можете подключиться из любого города. Оффлайн-присутствие в первый день желательно для нетворкинга, но не обязательно.",
-        "Иә, кез келген қаладан қосыла аласыз. Алғашқы 3 күнде оффлайн қатысу нетворкинг үшін пайдалы, бірақ міндетті емес.",
+        "Иә, сіз кез келген қаладан қосыла аласыз. Бірінші күні оффлайн қатысу нетворкинг үшін ұсынылады, бірақ міндетті емес.",
       ],
     },
     {

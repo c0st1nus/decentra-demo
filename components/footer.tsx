@@ -80,6 +80,15 @@ export function Footer() {
         <div className="flex items-center gap-2">
           <span className="text-xs text-default-400">Powered by</span>
           <PressableDepaLogo />
+          <span className="text-white/20">|</span>
+          <Link
+            isExternal
+            aria-label="Telegram"
+            className="text-xs text-default-400 hover:text-primary transition-colors flex items-center gap-1"
+            href="https://t.me/c0st1nus"
+          >
+            <span>c0st1nus</span>
+          </Link>
         </div>
       </div>
     </footer>

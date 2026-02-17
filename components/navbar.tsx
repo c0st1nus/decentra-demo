@@ -72,6 +72,7 @@ export const Navbar = () => {
             className="text-sm font-semibold glow-primary"
             color="primary"
             href={siteConfig.links.register}
+            isExternal
             radius="full"
             size="sm"
             variant="shadow"
