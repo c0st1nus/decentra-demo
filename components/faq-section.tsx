@@ -6,12 +6,33 @@ import { HelpCircle, Plus } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
 import { useLanguage } from "@/context/language-provider";
+import { parseStyledText } from "@/lib/parse-styled-text";
 
 export function FaqSection() {
   const { languageIndex } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggle = (index: number) => setOpenIndex((prev) => (prev === index ? null : index));
+  const renderFaqText = (text: string) =>
+    text.split(/(\[.*?\]\(.*?\))/g).map((part, i) => {
+      const match = part.match(/\[(.*?)\]\((.*?)\)/);
+
+      if (match) {
+        return (
+          <a
+            key={i}
+            className="text-primary hover:underline underline-offset-4"
+            href={match[2]}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {parseStyledText(match[1], "font-semibold text-primary")}
+          </a>
+        );
+      }
+
+      return <span key={i}>{parseStyledText(part, "font-semibold text-primary")}</span>;
+    });
 
   return (
     <section className="relative py-20 sm:py-32 px-4" id="faq">
@@ -42,7 +63,7 @@ export function FaqSection() {
                   onClick={() => toggle(index)}
                 >
                   <span className="text-[10px] sm:text-sm md:text-lg font-pixel font-medium text-foreground uppercase tracking-wide leading-snug origin-left">
-                    {item.question[languageIndex]}
+                    {renderFaqText(item.question[languageIndex])}
                   </span>
 
                   {/* +/× icon */}
@@ -65,30 +86,7 @@ export function FaqSection() {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                       <p className="pb-6 text-sm sm:text-base text-white leading-relaxed max-w-2xl font-sans">
-                        {(() => {
-                          const text = item.answer[languageIndex];
-                          const parts = text.split(/(\[.*?\]\(.*?\))/g);
-
-                          return parts.map((part, i) => {
-                            const match = part.match(/\[(.*?)\]\((.*?)\)/);
-
-                            if (match) {
-                              return (
-                                <a
-                                  key={i}
-                                  className="text-primary hover:underline underline-offset-4"
-                                  href={match[2]}
-                                  rel="noopener noreferrer"
-                                  target="_blank"
-                                >
-                                  {match[1]}
-                                </a>
-                              );
-                            }
-
-                            return part;
-                          });
-                        })()}
+                        {renderFaqText(item.answer[languageIndex])}
                       </p>
                     </motion.div>
                   )}

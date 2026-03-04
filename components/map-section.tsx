@@ -111,7 +111,7 @@ export function MapSection() {
         <div className="text-center mb-12 sm:mb-16 relative">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Globe className="w-5 h-5 text-primary" />
-            <span className="text-x font-mono text-primary uppercase tracking-tighter font-pixel">
+            <span className="text-x text-primary uppercase tracking-tighter font-pixel">
               {siteConfig.mapSection.badge[languageIndex]}
             </span>
           </div>
@@ -138,11 +138,7 @@ export function MapSection() {
             >
               <g id="siteConfig.regions">
                 {siteConfig.regions.map((region) => {
-                  if (region.id === "almatys") return null;
-
-                  const isActive =
-                    activeRegion === region.id ||
-                    (activeRegion === "almatys" && region.id === "almaty");
+                  const isActive = activeRegion === region.id;
 
                   return (
                     <path
@@ -176,7 +172,9 @@ export function MapSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                 <div className="absolute bottom-4 left-4">
-                  <h3 className="text-2xl font-bold text-white font-mono">{activeData.name[languageIndex]}</h3>
+                  <h3 className="text-2xl font-bold text-white font-mono">
+                    {activeData.name[languageIndex]}
+                  </h3>
                 </div>
               </div>
 
@@ -260,11 +258,11 @@ export function MapSection() {
         {/* Register Button */}
         <div className="flex flex-col sm:flex-row gap-4 mt-4 w-full max-w-[calc(100vw-32px)] sm:max-w-none items-center justify-center">
           <Button
+            isExternal
             as={Link}
             className="btn-hero glow-primary"
             color="primary"
             href={siteConfig.links.register}
-            isExternal
             radius="full"
             size="lg"
             startContent={<Zap className="w-5 h-5" />}

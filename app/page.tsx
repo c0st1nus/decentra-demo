@@ -82,7 +82,7 @@ export default function Home() {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <MapPin className="w-5 h-5 text-primary" />
-          <span className="text-x font-mono text-primary uppercase tracking-tighter font-pixel">
+          <span className="text-x text-primary uppercase tracking-tighter font-pixel">
             {siteConfig.heroLabels.locations[useLanguage().languageIndex]}
           </span>
         </motion.div>
