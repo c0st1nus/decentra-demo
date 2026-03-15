@@ -25,18 +25,15 @@ export function TracksSection() {
               width={150}
             />
           </div>
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Cpu className="w-5 h-5 text-secondary" />
-            <span className="text-x font-pixel text-secondary uppercase tracking-widest">
+          <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 mb-4">
+            <Cpu className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-secondary" />
+            <span className="text-x font-pixel text-secondary uppercase tracking-widest leading-none">
               {siteConfig.tracksSection.badge[languageIndex]}
             </span>
           </div>
           <h2 className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 font-pixel">
             {parseStyledText(siteConfig.tracksSection.title[languageIndex])}
           </h2>
-          <p className="text-white text-base sm:text-lg max-w-xl mx-auto font-pixel">
-            {siteConfig.tracksSection.subtitle[languageIndex]}
-          </p>
         </div>
 
         {/* Track Cards Grid */}
@@ -44,11 +41,13 @@ export function TracksSection() {
           {siteConfig.tracks.map((track, index) => (
             <TrackCard
               key={index}
-              decryptingLabel={siteConfig.tracksSection.decrypting[languageIndex]}
+              amount={track.amount?.[languageIndex]}
               description={track.description[languageIndex]}
+              image={track.image}
               index={index}
+              secondaryImage={track.secondaryImage}
               title={track.title[languageIndex]}
-              trackLabel={siteConfig.tracksSection.trackLabel[languageIndex]}
+              titleClassName={track.titleClassName}
             />
           ))}
         </div>

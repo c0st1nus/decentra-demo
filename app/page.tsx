@@ -20,16 +20,6 @@ const MapSection = dynamic(() => import("@/components/map-section").then((mod) =
   loading: () => <div className="h-[600px] w-full bg-black/20 animate-pulse" />,
 });
 
-const QuotesSection = dynamic(
-  () => import("@/components/quotes").then((mod) => mod.QuotesSection),
-  {
-    ssr: false,
-    loading: () => <div className="h-[400px] w-full bg-black/20 animate-pulse" />,
-  },
-);
-
-// Removed SolanaDaySection
-
 const TracksSection = dynamic(
   () => import("@/components/tracks-section").then((mod) => mod.TracksSection),
   {
@@ -103,6 +93,9 @@ export default function Home() {
               onComplete={handleTitleComplete}
             />
           </h1>
+          <div className="font-pixel text-3xl text-primary sm:text-6xl">
+            {siteConfig.heroPrize[useLanguage().languageIndex]}
+          </div>
         </motion.div>
 
         {/* Sub-heading */}
@@ -132,11 +125,11 @@ export default function Home() {
           transition={{ duration: 0.6, delay: 0.9 }}
         >
           <Button
+            isExternal
             as={Link}
             className="btn-hero glow-primary"
             color="primary"
             href={siteConfig.links.register}
-            isExternal
             radius="full"
             size="lg"
             startContent={<Zap className="w-5 h-5" />}
@@ -162,12 +155,7 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#000000] to-transparent pointer-events-none" />
       </section>
 
-      <div className="section-divider" />
-      <QuotesSection />
-      <div className="section-divider" />
       <MapSection />
-      {/* <div className="section-divider" />
-      <SolanaDaySection /> */}
       <div className="section-divider" />
       <TracksSection />
       <div className="section-divider" />
@@ -175,9 +163,9 @@ export default function Home() {
       <div className="section-divider" />
       <PartnersSection />
       <div className="section-divider" />
-      <FaqSection />
-      <div className="section-divider" />
       <AboutSection />
+      <div className="section-divider" />
+      <FaqSection />
       <Footer />
     </>
   );

@@ -28,9 +28,9 @@ export function HighlightsSection() {
               width={200}
             />
           </div>
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <Star className="w-5 h-5 text-primary" />
-            <span className="text-x font-pixel text-primary uppercase tracking-widest">
+          <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 mb-6">
+            <Star className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-primary" />
+            <span className="text-x font-pixel text-primary uppercase tracking-widest leading-none">
               {cfg.badge[languageIndex]}
             </span>
           </div>

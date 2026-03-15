@@ -109,9 +109,9 @@ export function MapSection() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16 relative">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Globe className="w-5 h-5 text-primary" />
-            <span className="text-x text-primary uppercase tracking-tighter font-pixel">
+          <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 mb-4">
+            <Globe className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-primary" />
+            <span className="text-x text-primary uppercase tracking-tighter font-pixel leading-none">
               {siteConfig.mapSection.badge[languageIndex]}
             </span>
           </div>

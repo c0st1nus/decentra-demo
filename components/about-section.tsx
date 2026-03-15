@@ -40,9 +40,9 @@ export function AboutSection() {
               width={100}
             />
           </div>
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <History className="w-5 h-5 text-primary" />
-            <span className="text-x font-pixel text-primary uppercase tracking-widest">
+          <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 mb-4">
+            <History className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-primary" />
+            <span className="text-x font-pixel text-primary uppercase tracking-widest leading-none">
               {cfg.badge[languageIndex]}
             </span>
           </div>

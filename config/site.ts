@@ -4,9 +4,9 @@ export const siteConfig = {
   name: "Decentrathon 5.0",
   favicon: "/favicon.ico",
   description: [
-    "Kazakhstan's national hackathon returns. Built for builders. Back on a national scale.",
+    "Kazakhstan's national hackathon returns, baby. Built for builders. Back on a national scale.",
     "Главный хакатон страны возвращается. Создан билдерами для билдеров. Снова в национальном масштабе.",
-    "Елдің басты хакатоны оралды. Құрушылардан құрушыларға арналған. Қайтадан республикалық деңгейде.",
+    "Елдің басты хакатоны қайта оралды. Құрушылардан құрушыларға арналған. Қайтадан республикалық деңгейде.",
   ],
   navItems: [
     {
@@ -52,6 +52,7 @@ export const siteConfig = {
     timer_date: "2026-03-27T10:00:00+06:00",
     caption: ["27 March - 5 April", "27 марта - 5 апреля", "27 наурыз - 5 сәуір"],
   },
+  heroPrize: ["20 000 000 ₸", "20 000 000 ₸", "20 000 000 ₸"],
   regions: [
     {
       id: "astana",
@@ -75,7 +76,7 @@ export const siteConfig = {
       address: [
         "Al-Farabi Avenue, 71, Building 20",
         "Проспект Аль-Фараби, 71 к20",
-        "Әл-Фараби даңғылы, 71, 20-құрылыс",
+        "Әл-Фараби даңғ., 71, 20-құрылыс",
       ],
       link: "https://go.2gis.com/lsIf6",
     },
@@ -131,13 +132,13 @@ export const siteConfig = {
       name: ["Taraz", "Тараз", "Тараз"],
       path: "M351.5 371.58V352.93V319.662H359.5V296.475H388V276.817H378.5V264.216H367.5V248.59H426V324.702V340.328H411V350.409H398.5V358.978H388V371.58H351.5Z",
       image: "/images/cities/taraz.webp",
-      title: ["ITU (Taraz)", "ITU (Тараз)", "ITU (Тараз)"],
+      title: ["Zhambyl hub", "Zhambyl hub", "Zhambyl hub"],
       address: [
-        "Taraz, Zheltoksan Street, 69B",
-        "г. Тараз, ул. Желтоксан, 69Б",
-        "Тараз қ., Желтоқсан к-сі, 69Б",
+        "Taraz, Tole Bi Avenue, 35",
+        "г. Тарас, проспект Толе би, 35",
+        "Тарас қ., Толе би даңғ., 35",
       ],
-      link: "https://go.2gis.com/ysFBG",
+      link: "https://go.2gis.com/mghPE",
     },
     {
       id: "pavlodar",
@@ -243,7 +244,7 @@ export const siteConfig = {
       address: [
         "Nursultan Nazarbayev Avenue, 191/3",
         "Проспект Нурсултана Назарбаева, 191/3",
-        "Нұрсұлтан Назарбаев даңғылы, 191/3",
+        "Нұрсұлтан Назарбаев даңғ., 191/3",
       ],
       link: "https://go.2gis.com/J6V2B",
     },
@@ -311,33 +312,49 @@ export const siteConfig = {
       image: "/images/cities/zhezkazgan.webp",
       title: ["Ulytau Hub (Zhezkazgan)", "Ulytau Hub (Жезказган)", "Ulytau Hub (Жезқазған)"],
       address: [
-        "Zhezkazgan, Abai St., 99",
-        "г. Жезказган, ул. Абая, 99",
-        "Жезқазған қ., Абай к-сі, 99",
+        "Zhezkazgan, Momiysuly St., 3a",
+        "г. Жезказган, ул. Момышулы, 3а",
+        "Жезқазған қ., Момышулы көшесі, 3а",
       ],
-      link: "https://go.2gis.com/Iujd5",
+      link: "https://go.2gis.com/F3NnN",
     },
   ],
   tracks: [
     {
-      title: ["To Be Announced", "Скоро объявим", "Жақында хабарланады"],
+      title: ["AI inDrive", "AI inDrive", "AI inDrive"],
+      image: "/images/logos/logo_indrive.webp",
+      titleClassName: "text-primary",
+      amount: ["*10 000 000 ₸*", "*10 000 000 ₸*", "*10 000 000 ₸*"],
       description: [
-        "Details coming soon",
-        "Подробности появятся совсем скоро",
-        "Толық мәлімет жақын арада болады",
+        "Tasks To Be Announced",
+        "Задачи будут объявлены позже",
+        "Тапсырмалар жақын арада жарияланады",
       ],
     },
     {
-      title: ["To Be Announced", "Скоро объявим", "Жақында хабарланады"],
+      title: [
+        "National Solana Hackathon",
+        "National Solana Hackathon",
+        "National Solana Hackathon",
+      ],
+      image: "/images/logos/logo_solana.webp",
+      secondaryImage: "/images/logos/logo_superteam.webp",
+      titleClassName: "text-secondary",
+      amount: ["*10 000 000 ₸*", "*10 000 000 ₸*", "*10 000 000 ₸*"],
       description: [
-        "Details coming soon",
-        "Подробности появятся совсем скоро",
-        "Толық мәлімет жақын арада болады",
+        "Tasks To Be Announced",
+        "Задачи будут объявлены позже",
+        "Тапсырмалар жақын арада жарияланады",
       ],
     },
   ],
   faqSection: {
-    badge: ["Got Questions?", "Остались вопросы?", "Сұрақтарыңыз бар ма?"],
+    badge: ["FAQ", "FAQ", "FAQ"],
+    title: [
+      "Everything you need to know before March 27.",
+      "Все, что нужно знать до 27 марта.",
+      "27 наурызға дейін білу керек нәрсенің бәрі.",
+    ],
   },
   faq: [
     {
@@ -367,9 +384,9 @@ export const siteConfig = {
         "10 күндік формат қалай жұмыс істейді?",
       ],
       answer: [
-        "Day 1: We work offline at official locations across Kazakhstan. The rest of the time: The hackathon continues online, where teams finalize and submit their projects.",
-        "Первый день: Работаем оффлайн на официальных локациях по всему Казахстану. Остальное время: Хакатон продолжается в онлайн-режиме, где команды финализируют и сдают свои проекты.",
-        "Бірінші күн: Қазақстан бойынша ресми локацияларда оффлайн жұмыс істейміз. Қалған уақытта: Хакатон онлайн форматта жалғасады, командалар жобаларын аяқтап, қашықтан тапсырады.",
+        "The first 3 days: You can work offline at one of the official locations across Kazakhstan. The remaining days: The hackathon continues online, where teams finalize and submit their projects remotely.",
+        "Первые 3 дня: вы можете работать оффлайн на одной из официальных площадок по Казахстану. Остальные дни: хакатон продолжается онлайн, где команды завершают и отправляют свои проекты удаленно.",
+        "Алғашқы 3 күн: Қазақстан бойынша ресми алаңдардың бірінде оффлайн жұмыс істеуге болады. Қалған күндері: хакатон онлайн жалғасып, командалар жобаларын қашықтан аяқтап, тапсырады.",
       ],
     },
     {
@@ -380,8 +397,8 @@ export const siteConfig = {
       ],
       answer: [
         "Offline participation will be available at selected official locations across Kazakhstan. The full list of cities will be announced soon.",
-        "Оффлайн-этап пройдет на базе региональных IT-хабов и университетов по всему Казахстану. Полный список локаций доступен в разделе «Локации».",
-        "Оффлайн кезең Қазақстан бойынша аймақтық IT-хабтар мен университеттер базасында өтеді. Локациялардың толық тізімі «Локациялар» бөлімінде көрсетілген.",
+        "Оффлайн-участие будет доступно на выбранных официальных площадках по всему Казахстану. Полный список городов будет объявлен позже.",
+        "Оффлайн қатысу Қазақстан бойынша таңдалған ресми алаңдарда қолжетімді болады. Қалалардың толық тізімі жақын арада жарияланады.",
       ],
     },
     {
@@ -404,16 +421,16 @@ export const siteConfig = {
       ],
       answer: [
         "No team? No problem. Connect with fellow builders in our Decentrathon [Telegram community](https://t.me/+BF7-mS199-Q4YjAy) or go solo — great ideas can come from anywhere.",
-        "Нет команды? Не беда! Найди единомышленников в нашем [Telegram-сообществе Decentrathon](https://t.me/+BF7-mS199-Q4YjAy) или участвуй соло — крутые идеи могут родиться и в одиночку.",
-        "Команда жоқ па? Ештеңе етпейді! Біздің Decentrathon [Telegram қауымдастығында](https://t.me/+BF7-mS199-Q4YjAy) серіктестер тап немесе жеке қатыс — керемет идеялар жалғыз да тууы мүмкін.",
+        "Вы можете найти тиммейтов в официальном [чате Decentrathon](https://t.me/+BF7-mS199-Q4YjAy) или участвовать соло.",
+        "Ресми [Decentrathon чатынан](https://t.me/+BF7-mS199-Q4YjAy) серіктестер тауып немесе жеке қатыса аласың.",
       ],
     },
     {
       question: ["What about meals?", "Будет ли питание?", "Тамақтану мәселесі қалай болады?"],
       answer: [
         "A pizza break will be provided on the first day of the hackathon.",
-        "В первый день хакатона всех участников ждет бодрящий пицца-брейк.",
-        "Хакатонның бірінші күні барлық қатысушыларды пицца-брейк күтеді.",
+        "Пицца-брейк будет организован в первый день хакатона.",
+        "Пицца-брейк хакатонның бірінші күні ұйымдастырылады.",
       ],
     },
     {
@@ -423,9 +440,9 @@ export const siteConfig = {
         "Сұрағыңызға жауап таппадыңыз ба?",
       ],
       answer: [
-        "Jump into our [Telegram community](https://t.me/+BF7-mS199-Q4YjAy) — our team and fellow hackers are always ready to help. It's the fastest way to get answers and stay in the loop.",
-        "Заглядывай в наше [Telegram-комьюнити](https://t.me/+BF7-mS199-Q4YjAy)! Команда и другие участники всегда на связи. Это самый быстрый способ получить инсайд и помощь.",
-        "Біздің [Telegram қауымдастығымызға](https://t.me/+BF7-mS199-Q4YjAy) қосылыңыз! Ұйымдастырушылар мен басқа қатысушылар әрқашан көмекке дайын. Бұл жауап алудың ең жылдам жолы.",
+        "Join the official Decentrathon [chat](https://t.me/+BF7-mS199-Q4YjAy) and ask your question there. Our team will respond as soon as possible.",
+        "Присоединяйтесь к официальному [чату Decentrathon](https://t.me/+BF7-mS199-Q4YjAy) и задайте свой вопрос там. Наша команда ответит как можно скорее.",
+        "Ресми Decentrathon [чатына](https://t.me/+BF7-mS199-Q4YjAy) қосылып, сұрағыңды сол жерде қой. Біздің команда мүмкіндігінше тез жауап береді.",
       ],
     },
   ],
@@ -444,52 +461,24 @@ export const siteConfig = {
     badge: ["Industry-Backed", "При поддержке индустрии", "Индустрия қолдауымен"],
     title: [
       "Hack the system.\n*Solve real industry challenges.*",
-      "Меняй правила игры.\n*Решай реальные задачи индустрии.*",
-      "Жүйені өзгерт.\n*Индустрияның нақты міндеттерін шеш.*",
+      "Меняй правила игры.\n*Решай реальные задачи бизнеса.*",
+      "Жүйені өзгерт.\n*Нақты бизнес тапсырмаларын шеш.*",
     ],
-    subtitle: [
-      "Tracks are being finalized with our industry partners. Stay tuned for the reveal.",
-      "Мы финализируем треки вместе с нашими партнерами. Совсем скоро здесь появятся подробности.",
-      "Біз тректерді серіктестерімізбен бірге нақтылап жатырмыз. Жақын арада толық ақпарат пайда болады.",
-    ],
-    trackLabel: ["Track", "Трек", "Трек"],
+    trackLabel: ["Case", "Кейс", "Кейс"],
     decrypting: ["Decrypting...", "Расшифровка...", "Шифр шешілуде..."],
   },
   heroLabels: {
     register: ["Register Now", "Зарегистрироваться", "Тіркелу"],
     telegram: ["Join Our Community", "Вступить в комьюнити", "Комьюнитиге қосылу"],
     locations: [
-      "20+ cities • Offline + Online",
-      "20+ городов • Оффлайн + Онлайн",
-      "20+ қала • Оффлайн + Онлайн",
+      "20 cities • Offline + Online",
+      "20 городов • Оффлайн + Онлайн",
+      "20 қала • Оффлайн + Онлайн",
     ],
   },
   links: {
     register: "https://forms.gle/r8vj3JJDBBUNbyPW6",
     telegram: "https://t.me/+BF7-mS199-Q4YjAy",
-  },
-  solanaDay: {
-    badge: ["Special Event", "Специальное событие", "Арнайы іс-шара"],
-    title: ["*Solana Build Station*", "*Solana Build Station*", "*Solana Build Station*"],
-    poweredBy: ["powered by Decentrathon", "при поддержке Decentrathon", "Decentrathon қолдауымен"],
-    stats: [
-      {
-        value: ["2 Tasks", "2 задачи", "2 тапсырма"],
-        label: ["Industry challenges to solve", "Индустриальные кейсы", "Индустриялық кейстер"],
-      },
-      {
-        value: ["For Central Asia", "Для Центральной Азии", "Орталық Азия үшін"],
-        label: ["Regional scope & impact", "Региональный масштаб", "Аймақтық ауқым"],
-      },
-      {
-        value: ["Kazakhstan 20 cities", "20 городов Казахстана", "Қазақстанның 20 қаласы"],
-        label: [
-          "Offline locations nationwide",
-          "Оффлайн-локации по стране",
-          "Ел бойынша оффлайн локациялар",
-        ],
-      },
-    ],
   },
   highlightsSection: {
     badge: ["Why Join?", "Зачем участвовать?", "Неліктен қатысу керек?"],
@@ -552,12 +541,28 @@ export const siteConfig = {
       image: "/images/logos/logo_ahub.webp",
     },
     {
-      name: ["AIDM", "AIDM", "AIDM"],
+      name: [
+        "Ministry of AI and Digital Development",
+        "Министерство ИИ и цифрового развития",
+        "ЖИ және цифрлық даму министрлігі",
+      ],
       image: "/images/logos/logo_aidm.webp",
     },
     {
       name: ["BAITC", "BAITC", "BAITC"],
       image: "/images/logos/logo_baitc.webp",
+    },
+    {
+      name: ["inDrive", "inDrive", "inDrive"],
+      image: "/images/logos/logo_indrive.webp",
+    },
+    {
+      name: ["Solana", "Solana", "Solana"],
+      image: "/images/logos/logo_solana.webp",
+    },
+    {
+      name: ["Solana Superteam KZ", "Solana Superteam KZ", "Solana Superteam KZ"],
+      image: "/images/logos/logo_superteam.webp",
     },
   ],
   aboutSection: {

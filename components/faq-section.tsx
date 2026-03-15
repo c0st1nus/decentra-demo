@@ -39,15 +39,18 @@ export function FaqSection() {
       <div className="max-w-3xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 relative">
-          <div className="flex items-center justify-center gap-4 mb-2">
-            <HelpCircle className="w-5 h-5 text-secondary" />
-            <span className="text-xs font-pixel text-secondary uppercase tracking-widest origin-left tra">
+          <div className="inline-flex items-center justify-center gap-1.5 sm:gap-2 mb-2">
+            <HelpCircle className="w-4 h-4 sm:w-5 sm:h-5 shrink-0 text-secondary" />
+            <span className="text-xs font-pixel text-secondary uppercase tracking-widest origin-left tra leading-none">
               {siteConfig.faqSection.badge[languageIndex]}
             </span>
           </div>
-          <h2 className="text-2xl sm:text-4xl md:text-6xl font-black tracking-tight font-pixel">
+          <h2 className="text-2xl sm:text-4xl md:text-6xl font-black tracking-tight font-pixel mb-4">
             <span className="text-gradient">FAQ</span>
           </h2>
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto font-pixel">
+            {siteConfig.faqSection.title[languageIndex]}
+          </p>
         </div>
 
         {/* Accordion */}
